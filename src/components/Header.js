@@ -5,11 +5,16 @@ import {
   setBoardName,
   setBoardDescription,
 } from "../features/boards/boardsSlice";
-import { addGroup } from "../features/groups/groupsSlice";
+import {
+  addGroup,
+  collapseAll,
+  expandAll,
+} from "../features/groups/groupsSlice";
 
 const Header = () => {
   const { activeBoardId, allBoards } = useSelector((state) => state.boards);
   const { allGroups } = useSelector((state) => state.groups);
+  const { isOpen } = useSelector((state) => state.sidebar);
   const activeBoard = allBoards.find((board) => board.id === activeBoardId);
 
   let groups = allGroups.filter((group) => group.boardId === activeBoardId);
@@ -23,7 +28,6 @@ const Header = () => {
 
   useEffect(() => {
     groups = allGroups.filter((group) => group.boardId === activeBoardId);
-    console.log(groups);
     const countElement = document.getElementById("header-count");
     const countGroups = groups.length;
     if (countGroups === 0) {
@@ -54,8 +58,16 @@ const Header = () => {
     );
   };
 
+  const collapseGroups = () => {
+    dispatch(collapseAll(activeBoardId));
+  };
+
+  const expandGroups = () => {
+    dispatch(expandAll(activeBoardId));
+  };
+
   return (
-    <header className="board-header">
+    <header className={`board-header ${!isOpen && "board-header-collapsed"}`}>
       <div className="flex-col">
         <section className="flex-col">
           <form onSubmit={handleSubmitName} className="flex-col">
@@ -84,6 +96,12 @@ const Header = () => {
             }
           >
             New group
+          </button>
+          <button className="btn-secondary" onClick={collapseGroups}>
+            Collapse all
+          </button>
+          <button className="btn-secondary" onClick={expandGroups}>
+            Expand all
           </button>
         </section>
       </div>

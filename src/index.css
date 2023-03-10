@@ -3,7 +3,7 @@
     --grey-contour: rgb(121, 117, 136);
 
     --blue-main:rgb(19, 117, 233);
-    --blue-bg: rgb(208, 221, 241);
+    --blue-bg: rgb(220, 231, 249);
     --blue-grey: rgb(177, 184, 233);
 
     --sb-width: 180px;
@@ -13,6 +13,8 @@
     --p-size: 14px;
     --sb-list-size: 18px;
     --round-btn-size: 26px;
+
+    --table-item-font-size: 16px;
 }
 * {
     margin: 0;
@@ -22,6 +24,9 @@
     font-family: 'Outfit', sans-serif;
 }
 
+.rotate-180 {
+    transform: rotate(180deg);
+}
 
 #root {
     display: flex;
@@ -36,13 +41,22 @@
     flex-direction: column;
 }
 
-.sb {
+.sb-spaceholder {
     padding: 0 20px;
-    z-index: 10;
 
     width:var(--sb-width);
+    flex-shrink: 0;
+    
+}
+
+.sb {
+    padding: 0 20px;
+    width: var(--sb-width);
+    position: fixed;
+    z-index: 100px;
+    top: 0px;
+    bottom: 0px;
     background-color: var(--blue-bg);
-    height: 100vh;
     border-right: 1px solid var(--grey-contour);
 }
 
@@ -99,11 +113,16 @@
 }
 
 .board-header {
-    margin-left: 20px;
-    position: absolute;
+    margin-left: calc(var(--sb-width) + 60px);
+    position: fixed;
     left: 0px;
     right: 0;
     min-height: 20px;
+    background-color: white;
+}
+
+.board-header-collapsed {
+    margin-left: calc(var(--sb-collapsed-width) + 50px);
 }
 
 .h1 {
@@ -113,6 +132,9 @@
 #board {
     position: relative;
     padding-left: 20px;
+    height: 100vh;
+    margin-left: 20px;
+    overflow: auto;
 }
 
 .board-header-name, .board-header-descr {
@@ -164,6 +186,10 @@ main {
     background-color: var(--blue-main);
 }
 
+.header-buttons {
+    gap: 20px;
+}
+
 .blue-main-font {
     color: var(--blue-main);
 }
@@ -175,10 +201,187 @@ main {
     color:aliceblue;
     font-weight: lighter;
     border: none;
+    cursor: pointer;
 }
 
-.group-title {
+.btn-secondary {
+    padding: 2px 5px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+.btn-secondary:hover {
+    box-shadow: 0 3px var(--blue-grey);
+}
+
+#groups-conteiner {
+    width: 100%;
+}
+
+.group-panel {
+    margin-left: 20px;
+    gap: 10px;
+}
+
+.group-collapse-btn {
+    margin-top: 8px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: var(--p-size);
+    color: var(--black);
+}
+
+.group-panel button {
+    width: fit-content;
+    height: fit-content;
+
+}
+
+.group-title, .group h2 {
+    font-weight: normal;
     font-size: var(--h2-size);
     width:fit-content;
     max-width: 300px;
+    border: none;
+}
+
+.group, .group-collapsed {
+    margin-bottom: 10px;
+    padding: 10px 0 20px 10px;
+}
+
+.group-collapsed {
+    cursor: pointer;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.group-collapsed:hover {
+    box-shadow: 10px 10px var(--blue-bg);
+}
+
+.table {
+    margin-top: 6px;
+    border-radius: 6px 0 0 6px;
+    border-left: 8px solid var(--blue-main);
+}
+
+.table-header .table-section{
+    user-select: none;
+}
+
+.table-section {
+    flex-shrink: 0;
+    min-width: 110px;
+    text-align: center;
+    font-size: var(--table-item-font-size);
+    border: 1px solid var(--grey-contour);
+    border-right: none;
+    border-bottom: none;
+
+}
+
+.table-section div, .item .table-section {
+    padding: 2px 0;
+    font-size: var(--table-item-font-size);
+}
+
+.item input {
+    margin-left: 10px;
+    margin-right: 20px;
+    padding-left: 5px;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 3px;
+
+    font-size: var(--table-item-font-size);
+    text-overflow:ellipsis;
+}
+
+.item:hover input {
+    background-color: var(--blue-bg);
+    border: 1px solid var(--blue-bg);
+}
+
+.item input:hover {
+    border: 1px solid var(--grey-contour);
+}
+
+.divider {
+    width: 6px;
+    cursor: e-resize;
+    background-color: var(--blue-bg);
+    opacity: 0;
+}
+
+.divider:hover {
+    opacity: 1;
+}
+
+.last {
+    min-width: 60px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.add-plus-btn {
+    margin: 1px 0 0 2px;
+    padding: 2px 10px 2px 0;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 12%;
+    font-size: var(--p-size);
+}
+
+.add-plus-btn-active {
+    box-shadow: 0 5px 2px var(--blue-bg);
+}
+
+.board-menu {
+    position: fixed;
+    width: fit-content;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 2px var(--blue-bg);
+    border-radius: 10%;
+    background-color: white;
+    list-style-type: none;
+}
+
+.board-menu li {
+    padding: 4px 4px 0;
+    text-transform: capitalize;
+}
+
+.board-menu li:hover {
+    text-shadow: 2px 2px 1px var(--blue-bg), -2px -2px 1px var(--blue-bg);
+    cursor: pointer;
+}
+
+.add-item {
+    font-size: var(--table-item-font-size);
+    padding: 4px 2px;
+    min-width: 260px;
+    border-top: 1px solid var(--grey-contour);
+    border-bottom: 1px solid var(--grey-contour);
+
+    background-color: var(--blue-bg);
+}
+
+.add-item input {
+    margin-left: 12px;
+    padding-left: 6px;
+    margin-right: 100px;
+}
+
+.item .table-section {
+    text-align: left;
+}
+
+.item:hover {
+    background-color: var(--blue-bg);
+    cursor: pointer;
 }
