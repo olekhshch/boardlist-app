@@ -6,6 +6,14 @@ const layoutA = {
   ],
 };
 
+const layoutB = {
+  lastIndex: 2,
+  content: [
+    { index: "t1", type: "main", title: "Dish", width: 250 },
+    { index: "t2", type: "text", title: "Duration", width: 150 },
+  ],
+};
+
 const initialState = {
   allGroups: [
     {
@@ -27,7 +35,7 @@ const initialState = {
       id: "g4",
       title: "Checked",
       isCollapsed: false,
-      groupLayout: layoutA,
+      groupLayout: layoutB,
     },
   ],
   lastIndex: 4,

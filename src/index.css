@@ -3,7 +3,7 @@
     --grey-contour: rgb(121, 117, 136);
 
     --blue-main:rgb(19, 117, 233);
-    --blue-bg: rgb(220, 231, 249);
+    --blue-bg: rgb(218, 226, 239);
     --blue-grey: rgb(177, 184, 233);
 
     --sb-width: 180px;
@@ -13,6 +13,7 @@
     --p-size: 14px;
     --sb-list-size: 18px;
     --round-btn-size: 26px;
+    --icon-size: 24px;
 
     --table-item-font-size: 16px;
 }
@@ -24,8 +25,12 @@
     font-family: 'Outfit', sans-serif;
 }
 
-.rotate-180 {
-    transform: rotate(180deg);
+li {
+    list-style: none;
+}
+
+.rotate-90 {
+    transform: rotate(-90deg);
 }
 
 #root {
@@ -216,14 +221,59 @@ main {
     box-shadow: 0 3px var(--blue-grey);
 }
 
+.group-buttons .btn-secondary {
+    margin-top: 10px;
+    opacity: 0;
+}
+
+.group:hover .group-buttons .btn-secondary {
+    margin-top: 8px;
+    opacity: 0.5;
+}
+
+.group:hover .group-buttons .btn-secondary:hover {
+    opacity: 1;
+}
+
 #groups-conteiner {
     width: 100%;
 }
 
 .group-panel {
-    margin-left: 20px;
+    margin-left: 0px;
     gap: 10px;
 }
+
+.group-options-btn {
+    margin-top: 4px;
+    background-color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: var(--p-size);
+    color: var(--black);
+    opacity: 0;
+}
+
+.group-options-btn .active {
+    background-color: var(--blue-bg);
+}
+
+.group-options-btn .icon {
+    margin-top: 5px;
+    width: 22px;
+    height: 16px;
+}
+
+.group:hover .group-options-btn {
+    opacity: 1;
+}
+
+.group-options {
+    min-width: 90px;
+    
+}
+
 
 .group-collapse-btn {
     margin-top: 8px;

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   allBoards: [
     { id: "b1", title: "Tasks", description: "To do lists" },
-    { id: "b3", title: "Dishes", description: "To check and checked" },
+    { id: "b3", title: "Dishes", description: "Checked and to be checked" },
   ],
   lastIndex: 3,
   activeBoardId: "b1",
@@ -16,7 +16,7 @@ const boardsSlice = createSlice({
     addBoard: (state, { payload }) => {
       state.lastIndex += 1;
       let id = `b${state.lastIndex}`;
-      const newBoard = { id, title: payload };
+      const newBoard = { id, title: payload, description: "" };
       state.allBoards = [...state.allBoards, newBoard];
     },
     setActiveBoard: (state, { payload }) => {

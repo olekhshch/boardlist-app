@@ -1,5 +1,5 @@
 const initialState = {
-  lastIndex: 2,
+  lastIndex: 6,
   allItems: [
     {
       id: "i1",
@@ -15,6 +15,22 @@ const initialState = {
       content: [
         { layoutIndex: "t1", value: "Walk" },
         { layoutIndex: "t2", value: "Going outside" },
+      ],
+    },
+    {
+      id: "i4",
+      groupId: "g4",
+      content: [
+        { layoutIndex: "t1", value: "Fried Rice" },
+        { layoutIndex: "t2", value: "~1h" },
+      ],
+    },
+    {
+      id: "i5",
+      groupId: "g4",
+      content: [
+        { layoutIndex: "t1", value: "Tomato eggs with rice" },
+        { layoutIndex: "t2", value: "<40 min" },
       ],
     },
   ],

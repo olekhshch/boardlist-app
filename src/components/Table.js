@@ -11,6 +11,8 @@ const Table = ({
   currentGroup,
   setCurrentGroup,
   setMenuCoordinates,
+  setMenuType,
+  menuType,
 }) => {
   const { groupLayout, id } = parent;
   const { allItems } = useSelector((state) => state.items);
@@ -34,6 +36,7 @@ const Table = ({
 
   const openAddSectionMenu = (e) => {
     e.preventDefault();
+    setMenuType("add-section");
     setCurrentGroup(id);
     const { left, top } = e.target.getBoundingClientRect();
     setMenuCoordinates({ left: left + 16, top });
@@ -58,17 +61,6 @@ const Table = ({
     window.addEventListener("mousemove", dividerMousemove);
     window.addEventListener("mouseup", dividerMouseup);
   };
-  let dividers = document.querySelectorAll(".divider");
-
-  useEffect(() => {
-    if (groupLayout.content.length !== dividers.length) {
-      dividers = document.querySelectorAll(".divider");
-      dividers.forEach((divider) => {
-        divider.removeEventListener("mousedown", dividerMousedown);
-        divider.addEventListener("mousedown", dividerMousedown);
-      });
-    }
-  }, [groupLayout.content.length]);
 
   return (
     <section className="table flex-col">
@@ -84,6 +76,7 @@ const Table = ({
               <div className="flex-grow-1">{title}</div>
               <div
                 className="divider"
+                onMouseDown={(e) => dividerMousedown(e)}
                 data-layoutid={index}
                 data-groupid={id}
                 data-width={width}
@@ -94,7 +87,9 @@ const Table = ({
         <div className="table-section last">
           <button
             className={`add-plus-btn flex-col ${
-              currentGroup === id && "add-plus-btn-active"
+              currentGroup === id &&
+              menuType === "add-section" &&
+              "add-plus-btn-active"
             }`}
             onClick={(e) => openAddSectionMenu(e)}
           >

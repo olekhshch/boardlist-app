@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addGroup,
   addGroupLayoutSection,
+  toggleIsCollapsed,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import Group from "./Group";
@@ -36,9 +37,16 @@ const BoardContent = () => {
       );
       dispatch(addGroupLayoutSection({ type, groupId: currentGroup }));
     }
+    setIsMenuOpen(false);
+    setCurrentGroup(null);
   };
 
   const Menu = () => {
+    const targetGroup = allGroups.find((group) => group.id === currentGroup);
+    const toggleCollapsed = () => {
+      dispatch(toggleIsCollapsed(currentGroup));
+      setIsMenuOpen(false);
+    };
     if (menuType === "add-section") {
       return (
         <ul
@@ -49,6 +57,23 @@ const BoardContent = () => {
           <li onClick={addLayoutSection}>number</li>
           <li onClick={addLayoutSection}>status</li>
         </ul>
+      );
+    }
+    if (menuType === "group-options") {
+      return (
+        <section
+          className="board-menu group-options"
+          style={{ top: menuCoordinates.top, left: menuCoordinates.left }}
+        >
+          <ul>
+            <li onClick={toggleCollapsed}>
+              {targetGroup.isCollapsed ? "Expand" : "Collapse"}
+            </li>
+            <li>Change colour</li>
+            <li>Rename</li>
+            <li>Delete</li>
+          </ul>
+        </section>
       );
     }
   };
@@ -77,6 +102,8 @@ const BoardContent = () => {
                 group={group}
                 currentGroup={currentGroup}
                 setCurrentGroup={setCurrentGroup}
+                menuType={menuType}
+                setMenuType={setMenuType}
               />
             );
           })}

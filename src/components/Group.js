@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { renameGroup, toggleIsCollapsed } from "../features/groups/groupsSlice";
 import { FaChevronDown } from "react-icons/fa";
+import { BiDotsHorizontal } from "react-icons/bi";
 
 import Table from "./Table";
 
@@ -11,6 +12,8 @@ const Group = ({
   setMenuCoordinates,
   setCurrentGroup,
   currentGroup,
+  menuType,
+  setMenuType,
 }) => {
   const { title, id, isCollapsed } = group;
   const dispatch = useDispatch();
@@ -27,6 +30,14 @@ const Group = ({
     if (groupTitle.trim() !== "") {
       dispatch(renameGroup({ id, title: groupTitle.trim() }));
     }
+  };
+
+  const toggleGroupMenu = (e) => {
+    setCurrentGroup(id);
+    setMenuType("group-options");
+    setIsMenuOpen(true);
+    const { left, top } = e.target.getBoundingClientRect();
+    setMenuCoordinates({ left, top: top + 20 });
   };
 
   if (isCollapsed) {
@@ -46,6 +57,9 @@ const Group = ({
   return (
     <div className="group">
       <div className="flex group-panel">
+        <button className={`group-options-btn`} onClick={toggleGroupMenu}>
+          <BiDotsHorizontal className="icon" />
+        </button>
         <button
           className="group-collapse-btn"
           onClick={() => dispatch(toggleIsCollapsed(id))}
@@ -59,9 +73,6 @@ const Group = ({
             onChange={(e) => setGroupTitle(e.target.value)}
           />
         </form>
-        <div className="group-buttons">
-          <button>Settings</button>
-        </div>
       </div>
       <Table
         type="group"
@@ -70,6 +81,8 @@ const Group = ({
         setMenuCoordinates={setMenuCoordinates}
         setCurrentGroup={setCurrentGroup}
         currentGroup={currentGroup}
+        setMenuType={setMenuType}
+        menuType={menuType}
       ></Table>
     </div>
   );
