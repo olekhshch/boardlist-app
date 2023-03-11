@@ -4,6 +4,7 @@ import {
   addGroup,
   addGroupLayoutSection,
   toggleIsCollapsed,
+  setTheme,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import Group from "./Group";
@@ -47,6 +48,13 @@ const BoardContent = () => {
       dispatch(toggleIsCollapsed(currentGroup));
       setIsMenuOpen(false);
     };
+    const openGroupThemes = () => {
+      setMenuType("group-theme");
+    };
+    const setGroupTheme = (e) => {
+      const themeValue = e.target.dataset.theme;
+      dispatch(setTheme({ groupId: currentGroup, theme: themeValue }));
+    };
     if (menuType === "add-section") {
       return (
         <ul
@@ -69,10 +77,39 @@ const BoardContent = () => {
             <li onClick={toggleCollapsed}>
               {targetGroup.isCollapsed ? "Expand" : "Collapse"}
             </li>
-            <li>Change colour</li>
+            <li onClick={openGroupThemes}>Change colour</li>
             <li>Rename</li>
             <li>Delete</li>
           </ul>
+        </section>
+      );
+    }
+    if (menuType === "group-theme") {
+      return (
+        <section
+          className="group-theme-menu flex"
+          style={{ top: menuCoordinates.top + 20, left: "50px" }}
+        >
+          <div
+            className="theme-picker blue-main"
+            data-theme="blue"
+            onClick={setGroupTheme}
+          ></div>
+          <div
+            className="theme-picker green-main"
+            data-theme="green"
+            onClick={setGroupTheme}
+          ></div>
+          <div
+            className="theme-picker red-main"
+            data-theme="red"
+            onClick={setGroupTheme}
+          ></div>
+          <div
+            className="theme-picker yellow-main"
+            data-theme="yellow"
+            onClick={setGroupTheme}
+          ></div>
         </section>
       );
     }

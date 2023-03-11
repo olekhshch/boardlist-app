@@ -15,7 +15,7 @@ const Group = ({
   menuType,
   setMenuType,
 }) => {
-  const { title, id, isCollapsed } = group;
+  const { title, id, isCollapsed, theme } = group;
   const dispatch = useDispatch();
 
   const { allItems } = useSelector((state) => state.items);
@@ -47,7 +47,9 @@ const Group = ({
         onClick={() => dispatch(toggleIsCollapsed(id))}
       >
         <div className="flex-col group-panel">
-          <h2 className="group-title blue-main-font">{title}</h2>
+          <h2 className="group-title" style={{ color: `var(--${theme}-main)` }}>
+            {title}
+          </h2>
           <p>{itemsCount}</p>
         </div>
       </div>
@@ -68,7 +70,8 @@ const Group = ({
         </button>
         <form onSubmit={handleSubmit}>
           <input
-            className="group-title blue-main-font"
+            className="group-title"
+            style={{ color: `var(--${theme}-main)` }}
             value={groupTitle}
             onChange={(e) => setGroupTitle(e.target.value)}
           />

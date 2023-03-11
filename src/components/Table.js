@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import Item from "./Item";
 import { addItem } from "../features/items/itemsSlice";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { setSectionWidth } from "../features/groups/groupsSlice";
 
@@ -14,7 +14,7 @@ const Table = ({
   setMenuType,
   menuType,
 }) => {
-  const { groupLayout, id } = parent;
+  const { groupLayout, id, theme } = parent;
   const { allItems } = useSelector((state) => state.items);
   const groupItems = allItems.filter((item) => item.groupId === id);
   console.log(allItems);
@@ -63,7 +63,10 @@ const Table = ({
   };
 
   return (
-    <section className="table flex-col">
+    <section
+      className="table flex-col"
+      style={{ borderColor: `var(--${theme}-main)` }}
+    >
       <div className="table-header flex">
         {groupLayout.content.map((section) => {
           const { index, width, title } = section;
@@ -102,7 +105,11 @@ const Table = ({
           return <Item key={item.id} parent={item} groupLayout={groupLayout} />;
         })}
       </div>
-      <form className="add-item flex-col" onSubmit={handleSubmit}>
+      <form
+        className="add-item flex-col"
+        style={{ backgroundColor: `var(--${theme}-bg)` }}
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           placeholder="+ Add new Item..."

@@ -6,6 +6,18 @@
     --blue-bg: rgb(218, 226, 239);
     --blue-grey: rgb(177, 184, 233);
 
+    --green-main: rgb(17, 175, 83);
+    --green-bg: rgb(182, 217, 186);
+    --green-grey: rgb(156, 199, 160);
+
+    --yellow-main: rgb(225, 228, 10);
+    --yellow-bg: rgb(246, 247, 199);
+    --yellow-grey: rgb(191, 192, 160);
+
+    --red-main: rgb(235, 20, 20);
+    --red-bg: rgb(235, 207, 207);
+    --red-grey: rgb(165, 153, 153);
+
     --sb-width: 180px;
     --sb-collapsed-width: 40px;
     --h1-size: 32px;
@@ -23,6 +35,22 @@
     color: var(--black);
     font-size: var(--p-size);
     font-family: 'Outfit', sans-serif;
+}
+
+.blue-main {
+    background-color: var(--blue-main);
+}
+
+.green-main {
+    background-color: var(--green-main);
+}
+
+.yellow-main {
+    background-color: var(--yellow-main);
+}
+
+.red-main {
+    background-color: var(--red-main);
 }
 
 li {
@@ -185,10 +213,6 @@ main {
     cursor: pointer;
     background-color: white;
     
-}
-
-.blue-main {
-    background-color: var(--blue-main);
 }
 
 .header-buttons {
@@ -434,4 +458,20 @@ main {
 .item:hover {
     background-color: var(--blue-bg);
     cursor: pointer;
+}
+
+.group-theme-menu {
+    position: absolute;
+    background-color: white;
+    padding: 6px;
+    box-shadow: 0 0 20px var(--grey-contour);
+    gap: 10px;
+    border-radius: 6px;
+}
+
+.theme-picker {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--grey-contour);
 }

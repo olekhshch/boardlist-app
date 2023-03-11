@@ -21,6 +21,7 @@ const initialState = {
       id: "g1",
       title: "Today",
       isCollapsed: false,
+      theme: "blue",
       groupLayout: layoutA,
     },
     {
@@ -28,6 +29,7 @@ const initialState = {
       id: "g3",
       title: "General",
       isCollapsed: true,
+      theme: "green",
       groupLayout: layoutA,
     },
     {
@@ -35,6 +37,7 @@ const initialState = {
       id: "g4",
       title: "Checked",
       isCollapsed: false,
+      theme: "green",
       groupLayout: layoutB,
     },
   ],

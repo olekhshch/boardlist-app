@@ -11,17 +11,15 @@ const groupsSlice = createSlice({
   initialState,
   reducers: {
     addGroup: (state, { payload }) => {
-      console.log(payload);
       state.lastIndex = state.lastIndex + 1;
       const id = `g${state.lastIndex}`;
-      console.log(id);
       const boardId = payload.boardId;
       const title = payload.title ? payload.title : "New group";
       const groupLayout = defaultGroupLayout;
-      console.log({ id, title, groupLayout });
+      const theme = "blue";
       state.allGroups = [
         ...state.allGroups,
-        { id, boardId, title, groupLayout },
+        { id, boardId, title, theme, groupLayout },
       ];
     },
     renameGroup: (state, { payload }) => {
@@ -104,6 +102,16 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    setTheme: (state, { payload }) => {
+      const { groupId, theme } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          return { ...group, theme };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
   },
 });
 
@@ -117,4 +125,5 @@ export const {
   toggleIsCollapsed,
   collapseAll,
   expandAll,
+  setTheme,
 } = groupsSlice.actions;
