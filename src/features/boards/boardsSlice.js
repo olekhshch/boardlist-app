@@ -6,7 +6,7 @@ const initialState = {
     { id: "b3", title: "Dishes", description: "Checked and to be checked" },
   ],
   lastIndex: 3,
-  activeBoardId: "b1",
+  activeBoardId: "b3",
 };
 
 const boardsSlice = createSlice({

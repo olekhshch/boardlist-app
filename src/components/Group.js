@@ -14,6 +14,8 @@ const Group = ({
   currentGroup,
   menuType,
   setMenuType,
+  statusList,
+  setStatusList,
 }) => {
   const { title, id, isCollapsed, theme } = group;
   const dispatch = useDispatch();
@@ -86,6 +88,8 @@ const Group = ({
         currentGroup={currentGroup}
         setMenuType={setMenuType}
         menuType={menuType}
+        statusList={statusList}
+        setStatusList={setStatusList}
       ></Table>
     </div>
   );

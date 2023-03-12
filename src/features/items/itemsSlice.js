@@ -10,9 +10,12 @@ const itemsSlice = createSlice({
       state.lastIndex = state.lastIndex + 1;
       const id = `i${state.lastIndex}`;
       const content = layout.map((section) => {
-        const { index } = section;
+        const { index, type } = section;
         if (index === "t1") {
           return { layoutIndex: section.index, value: mainValue };
+        }
+        if (type === "status") {
+          return { layoutIndex: section.index, value: "", type };
         }
         return { layoutIndex: section.index, value: "" };
       });

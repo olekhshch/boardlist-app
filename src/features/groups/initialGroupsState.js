@@ -1,5 +1,5 @@
 const layoutA = {
-  lastIndex: 2,
+  lastIndex: 3,
   content: [
     { index: "t1", type: "main", title: "Item", width: 230 },
     { index: "t2", type: "text", title: "Type of activity", width: 150 },
@@ -7,10 +7,17 @@ const layoutA = {
 };
 
 const layoutB = {
-  lastIndex: 2,
+  lastIndex: 4,
   content: [
     { index: "t1", type: "main", title: "Dish", width: 250 },
     { index: "t2", type: "text", title: "Duration", width: 150 },
+    {
+      index: "t3",
+      type: "status",
+      statusId: "s1",
+      title: "Is vege?",
+      width: 110,
+    },
   ],
 };
 

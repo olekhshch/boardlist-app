@@ -1,5 +1,5 @@
 const initialState = {
-  lastIndex: 6,
+  lastIndex: 11,
   allItems: [
     {
       id: "i1",
@@ -23,6 +23,7 @@ const initialState = {
       content: [
         { layoutIndex: "t1", value: "Fried Rice" },
         { layoutIndex: "t2", value: "~1h" },
+        { layoutIndex: "t3", value: "green", type: "status" },
       ],
     },
     {
@@ -31,6 +32,15 @@ const initialState = {
       content: [
         { layoutIndex: "t1", value: "Tomato eggs with rice" },
         { layoutIndex: "t2", value: "<40 min" },
+        { layoutIndex: "t3", value: "red", type: "status" },
+      ],
+    },
+    {
+      id: "i7",
+      groupId: "g3",
+      content: [
+        { layoutIndex: "t1", value: "Canada visa" },
+        { layoutIndex: "t2", value: "Documents" },
       ],
     },
   ],

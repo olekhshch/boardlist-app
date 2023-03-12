@@ -32,17 +32,29 @@ const groupsSlice = createSlice({
       state.allGroups = newGroups;
     },
     addGroupLayoutSection: (state, { payload }) => {
-      console.log(payload); //groupId, type
+      console.log(payload); //groupId, type, statusId
       const newGroups = state.allGroups.map((group) => {
         if (group.id === payload.groupId) {
           const { lastIndex, content } = group.groupLayout;
           const newIndex = lastIndex + 1;
-          const newSection = {
-            index: `t${newIndex}`,
-            title: "Text field",
-            type: payload.type,
-            width: 140,
-          };
+          let newSection;
+          if (payload.type === "text") {
+            newSection = {
+              index: `t${newIndex}`,
+              title: "Text field",
+              type: payload.type,
+              width: 160,
+            };
+          }
+          if (payload.type === "status") {
+            newSection = {
+              index: `t${newIndex}`,
+              title: "Status",
+              type: payload.type,
+              statusId: payload.statusId,
+              width: 120,
+            };
+          }
           const newContent = [...content, newSection];
           const newLayout = {
             lastIndex: newIndex,

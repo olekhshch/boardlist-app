@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addSectionToItem } from "../features/items/itemsSlice";
 import Cell from "./Cell";
 
-const Item = ({ parent, groupLayout }) => {
+const Item = ({ parent, groupLayout, statusList, setStatusList }) => {
   const { id, content } = parent;
   const dispatch = useDispatch();
 
@@ -11,7 +11,7 @@ const Item = ({ parent, groupLayout }) => {
   return (
     <div className="item flex">
       {groupLayout.content.map((section) => {
-        const { index, type, width } = section;
+        const { index, type, width, statusId } = section;
         const value =
           content.find((section) => section.layoutIndex === index).value ?? "";
         return (
@@ -22,6 +22,9 @@ const Item = ({ parent, groupLayout }) => {
             type={type}
             itemId={id}
             sectionIndex={index}
+            statusId={statusId}
+            statusList={statusList}
+            setStatusList={setStatusList}
           />
         );
       })}

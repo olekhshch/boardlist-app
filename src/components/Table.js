@@ -13,6 +13,8 @@ const Table = ({
   setMenuCoordinates,
   setMenuType,
   menuType,
+  statusList,
+  setStatusList,
 }) => {
   const { groupLayout, id, theme } = parent;
   const { allItems } = useSelector((state) => state.items);
@@ -102,7 +104,15 @@ const Table = ({
       </div>
       <div className="table-items flex-col">
         {groupItems.map((item) => {
-          return <Item key={item.id} parent={item} groupLayout={groupLayout} />;
+          return (
+            <Item
+              key={item.id}
+              parent={item}
+              groupLayout={groupLayout}
+              statusList={statusList}
+              setStatusList={setStatusList}
+            />
+          );
         })}
       </div>
       <form

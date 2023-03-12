@@ -7,11 +7,13 @@ import {
   setTheme,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
+import { addStatus } from "../features/statuses/statusesSlice";
 import Group from "./Group";
 
 const BoardContent = () => {
   const { activeBoardId } = useSelector((state) => state.boards);
   const { allGroups } = useSelector((state) => state.groups);
+  const statusesState = useSelector((state) => state.statuses);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuType, setMenuType] = useState("add-section");
@@ -20,6 +22,12 @@ const BoardContent = () => {
     top: 300,
   });
   const [currentGroup, setCurrentGroup] = useState(null);
+
+  const [statusList, setStatusList] = useState({
+    isOpen: false,
+    itemId: null,
+    statusId: null,
+  });
 
   const dispatch = useDispatch();
 
@@ -37,6 +45,24 @@ const BoardContent = () => {
         })
       );
       dispatch(addGroupLayoutSection({ type, groupId: currentGroup }));
+    }
+    if (type === "status") {
+      dispatch(addStatus(currentGroup));
+      dispatch(
+        addSectionToItems({
+          type,
+          groupId: currentGroup,
+          newIndex: `t${lastIndex + 1}`,
+        })
+      );
+      dispatch(
+        addGroupLayoutSection({
+          type,
+          groupId: currentGroup,
+          statusId: `s${statusesState.lastIndex + 1}`,
+          newIndex: `t${lastIndex + 1}`,
+        })
+      );
     }
     setIsMenuOpen(false);
     setCurrentGroup(null);
@@ -141,6 +167,8 @@ const BoardContent = () => {
                 setCurrentGroup={setCurrentGroup}
                 menuType={menuType}
                 setMenuType={setMenuType}
+                statusList={statusList}
+                setStatusList={setStatusList}
               />
             );
           })}
