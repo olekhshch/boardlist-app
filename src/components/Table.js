@@ -4,6 +4,7 @@ import { addItem } from "../features/items/itemsSlice";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { setSectionWidth } from "../features/groups/groupsSlice";
+import { openTableSectionMenu } from "../features/menu/menuSlice";
 
 const Table = ({
   parent,
@@ -37,12 +38,10 @@ const Table = ({
   };
 
   const openAddSectionMenu = (e) => {
-    e.preventDefault();
-    setMenuType("add-section");
-    setCurrentGroup(id);
     const { left, top } = e.target.getBoundingClientRect();
-    setMenuCoordinates({ left: left + 16, top });
-    setIsMenuOpen(true);
+    dispatch(
+      openTableSectionMenu({ coordinates: { left, top }, group: parent })
+    );
   };
 
   const dividerMousedown = (e) => {
@@ -117,7 +116,7 @@ const Table = ({
       </div>
       <form
         className="add-item flex-col"
-        style={{ backgroundColor: `var(--${theme}-bg)` }}
+        style={{ backgroundColor: `var(--${theme}-bg)`, width: "100%" }}
         onSubmit={handleSubmit}
       >
         <input

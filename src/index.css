@@ -3,11 +3,11 @@
     --grey-contour: rgb(121, 117, 136);
 
     --blue-main:rgb(19, 117, 233);
-    --blue-bg: rgb(218, 226, 239);
+    --blue-bg: rgb(211, 221, 238);
     --blue-grey: rgb(177, 184, 233);
 
     --green-main: rgb(17, 175, 83);
-    --green-bg: rgb(182, 217, 186);
+    --green-bg: rgb(195, 230, 199);
     --green-grey: rgb(156, 199, 160);
 
     --yellow-main: rgb(225, 228, 10);
@@ -17,6 +17,22 @@
     --red-main: rgb(235, 20, 20);
     --red-bg: rgb(235, 207, 207);
     --red-grey: rgb(165, 153, 153);
+
+    --pink-main: rgb(237, 60, 140);
+    --pink-bg: rgb(229, 180, 202);
+    --pink-grey: rgb(171, 156, 162);
+
+    --turquoise-main: rgb(22, 214, 232);
+    --turquoise-bg: rgb(210, 240, 243);
+    --turquoise-grey: rgb(160, 183, 185);
+
+    --orange-main: rgb(231, 129, 45);
+    --orange-bg: rgb(243, 224, 208);
+    --orange-grey: rgb(180, 170, 162);
+
+    --violet-main: rgb(188, 45, 227);
+    --violet-bg: rgb(230, 202, 238);
+    --violet-grey: rgb(174, 165, 176);
 
     --sb-width: 180px;
     --sb-collapsed-width: 40px;
@@ -216,7 +232,8 @@ main {
 }
 
 .header-buttons {
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .blue-main-font {
@@ -360,13 +377,12 @@ main {
 }
 
 .table-section div, .item .table-section {
-    padding: 2px 0;
+    padding: 0;
     font-size: var(--table-item-font-size);
 }
 
 .item input {
-    margin-left: 10px;
-    margin-right: 20px;
+    margin: 2px 6px 2px 10px;
     padding-left: 5px;
     border: 1px solid white;
     background-color: white;
@@ -397,7 +413,7 @@ main {
 }
 
 .last {
-    min-width: 60px;
+    min-width: 90px;
     flex-grow: 1;
     text-align: left;
 }
@@ -491,4 +507,81 @@ main {
     gap: 1px;
 }
 
+.cell-main-comments {
+    flex-shrink: 0;
+    border-left: 1px solid var(--grey-contour);
+}
 
+.comments-icon {
+    font-size: 20px;
+    padding: 0 30px;
+}
+
+.table-section-main {
+    justify-content: space-between;
+    min-width: 110px;
+    height: 1.5em;
+    text-align: center;
+    font-size: var(--table-item-font-size);
+    border: 1px solid var(--grey-contour);
+    border-right: none;
+    border-bottom: none;
+}
+
+.table-section-main form {
+    flex-shrink: 1;
+}
+
+.table-section input {
+    margin-right: 40px;
+}
+
+.item-window {
+    position: absolute;
+    padding: 6px;
+    width: 500px;
+    height: 400px;
+    background-color: white;
+    z-index: 200;
+    box-shadow: 0 0 15px var(--grey-contour);
+    border-radius: 4px;
+    background-color: white;
+    list-style-type: none;
+}
+
+.item-window-header {
+    user-select: none;
+    cursor:grab;
+}
+
+.new-note-form textarea {
+    padding: 0.4em;
+    resize: vertical;
+    max-height: 300px;
+    min-height: 30px;
+}
+
+.new-note-form input {
+    padding: 0.1em 0.4em;
+}
+
+.item-notes {
+    overflow: auto;
+}
+
+.menu {
+    position: absolute;
+    padding: 6px;
+    width: fit-content;
+    background-color: white;
+    z-index: 200;
+    box-shadow: 0 0 15px var(--grey-contour);
+    border-radius: 4px;
+    background-color: white;
+    list-style-type: none;
+}
+
+.menu li:hover {
+    cursor: pointer;
+    text-shadow: 0px 0px 3px var(--grey-contour);
+}

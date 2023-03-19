@@ -8,6 +8,8 @@ const initialState = {
         { layoutIndex: "t1", value: "Git push" },
         { layoutIndex: "t2", value: "Read, video" },
       ],
+      lastNoteIndex: 4,
+      notes: [],
     },
     {
       id: "i2",
@@ -16,6 +18,8 @@ const initialState = {
         { layoutIndex: "t1", value: "Walk" },
         { layoutIndex: "t2", value: "Going outside" },
       ],
+      lastNoteIndex: 4,
+      notes: [],
     },
     {
       id: "i4",
@@ -24,6 +28,19 @@ const initialState = {
         { layoutIndex: "t1", value: "Fried Rice" },
         { layoutIndex: "t2", value: "~1h" },
         { layoutIndex: "t3", value: "green", type: "status" },
+      ],
+      lastNoteIndex: 4,
+      notes: [
+        {
+          header: "Ingridients",
+          content: "Soy sauce, rice, chicken",
+          isPinned: false,
+        },
+        {
+          header: "Prep",
+          content: "Cook the rice 1 night before the actual cooking",
+          isPinned: true,
+        },
       ],
     },
     {
@@ -34,6 +51,8 @@ const initialState = {
         { layoutIndex: "t2", value: "<40 min" },
         { layoutIndex: "t3", value: "red", type: "status" },
       ],
+      lastNoteIndex: 4,
+      notes: [],
     },
     {
       id: "i7",
@@ -42,6 +61,8 @@ const initialState = {
         { layoutIndex: "t1", value: "Canada visa" },
         { layoutIndex: "t2", value: "Documents" },
       ],
+      lastNoteIndex: 4,
+      notes: [],
     },
   ],
 };

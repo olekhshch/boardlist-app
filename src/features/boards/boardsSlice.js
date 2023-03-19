@@ -13,6 +13,12 @@ const boardsSlice = createSlice({
   name: "boards",
   initialState,
   reducers: {
+    setBoardsState: (state, { payload }) => {
+      const { lastIndex, allBoards, activeBoardId } = payload;
+      state.lastIndex = lastIndex;
+      state.activeBoardId = activeBoardId;
+      state.allBoards = allBoards;
+    },
     addBoard: (state, { payload }) => {
       state.lastIndex += 1;
       let id = `b${state.lastIndex}`;
@@ -45,5 +51,10 @@ const boardsSlice = createSlice({
 
 export default boardsSlice.reducer;
 
-export const { addBoard, setActiveBoard, setBoardName, setBoardDescription } =
-  boardsSlice.actions;
+export const {
+  setBoardsState,
+  addBoard,
+  setActiveBoard,
+  setBoardName,
+  setBoardDescription,
+} = boardsSlice.actions;

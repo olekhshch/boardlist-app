@@ -5,6 +5,10 @@ const itemsSlice = createSlice({
   name: "items",
   initialState,
   reducers: {
+    setItemsState: (state, { payload }) => {
+      state.allItems = payload.allItems;
+      state.lastIndex = payload.lastIndex;
+    },
     addItem: (state, { payload }) => {
       const { groupId, layout, mainValue } = payload;
       state.lastIndex = state.lastIndex + 1;
@@ -23,6 +27,7 @@ const itemsSlice = createSlice({
         id,
         groupId,
         content,
+        notes: [],
       };
       state.allItems = [...state.allItems, newItem];
     },
@@ -62,4 +67,5 @@ const itemsSlice = createSlice({
 
 export default itemsSlice.reducer;
 
-export const { addItem, addSectionToItems, changeValue } = itemsSlice.actions;
+export const { addItem, addSectionToItems, changeValue, setItemsState } =
+  itemsSlice.actions;

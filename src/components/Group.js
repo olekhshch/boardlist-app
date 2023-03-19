@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { renameGroup, toggleIsCollapsed } from "../features/groups/groupsSlice";
 import { FaChevronDown } from "react-icons/fa";
 import { BiDotsHorizontal } from "react-icons/bi";
+import { openGroupMenu } from "../features/menu/menuSlice";
 
 import Table from "./Table";
 
@@ -35,11 +36,15 @@ const Group = ({
   };
 
   const toggleGroupMenu = (e) => {
-    setCurrentGroup(id);
-    setMenuType("group-options");
-    setIsMenuOpen(true);
+    console.log("mmm");
     const { left, top } = e.target.getBoundingClientRect();
-    setMenuCoordinates({ left, top: top + 20 });
+    console.log(left);
+    dispatch(
+      openGroupMenu({
+        coordinates: { left: left + 10, top: top + 10 },
+        groupId: id,
+      })
+    );
   };
 
   if (isCollapsed) {

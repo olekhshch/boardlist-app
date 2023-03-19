@@ -10,6 +10,11 @@ const groupsSlice = createSlice({
   name: "groups",
   initialState,
   reducers: {
+    setGroupsState: (state, { payload }) => {
+      const { allGroups, lastIndex } = payload;
+      state.allGroups = allGroups;
+      state.lastIndex = lastIndex;
+    },
     addGroup: (state, { payload }) => {
       state.lastIndex = state.lastIndex + 1;
       const id = `g${state.lastIndex}`;
@@ -130,6 +135,7 @@ const groupsSlice = createSlice({
 export default groupsSlice.reducer;
 
 export const {
+  setGroupsState,
   addGroup,
   renameGroup,
   addGroupLayoutSection,

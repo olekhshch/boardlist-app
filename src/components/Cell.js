@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeValue } from "../features/items/itemsSlice";
-import { openMenu } from "../features/menu/menuSlice";
+import { openStatusListMenu, openItemWindow } from "../features/menu/menuSlice";
+import { GoNote } from "react-icons/go";
 
 const Cell = ({ width, value, type, itemId, sectionIndex, statusId }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Cell = ({ width, value, type, itemId, sectionIndex, statusId }) => {
     const openStatusMenu = (e) => {
       const { left, top } = e.target.getBoundingClientRect();
       dispatch(
-        openMenu({
+        openStatusListMenu({
           type: "status-list",
           coordinates: { left, top },
           statusContent: status.content,
@@ -57,6 +58,7 @@ const Cell = ({ width, value, type, itemId, sectionIndex, statusId }) => {
     );
   }
 
+  //type === 'text'
   return (
     <form
       className="table-section flex-col"

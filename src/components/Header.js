@@ -1,22 +1,29 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addBoard,
   setBoardName,
   setBoardDescription,
+  setBoardsState,
 } from "../features/boards/boardsSlice";
 import {
   addGroup,
   collapseAll,
   expandAll,
+  setGroupsState,
 } from "../features/groups/groupsSlice";
+import { setItemsState } from "../features/items/itemsSlice";
 
 const Header = () => {
-  const { activeBoardId, allBoards } = useSelector((state) => state.boards);
-  const { allGroups } = useSelector((state) => state.groups);
+  const boardsState = useSelector((state) => state.boards);
+  const { activeBoardId, allBoards } = boardsState;
+  const groupsState = useSelector((state) => state.groups);
+  const { allGroups } = groupsState;
   const { isOpen } = useSelector((state) => state.sidebar);
   const activeBoard = allBoards.find((board) => board.id === activeBoardId);
 
+  const itemsState = useSelector((state) => state.items);
   let groups = allGroups.filter((group) => group.boardId === activeBoardId);
   const [boardNameValue, setBoardNameValue] = useState(activeBoard.title);
   const [boardDescValue, setBoardDescValue] = useState(activeBoard.description);
@@ -66,6 +73,33 @@ const Header = () => {
     dispatch(expandAll(activeBoardId));
   };
 
+  const loadState = () => {
+    const fetchBoards = axios
+      .get("/boards", "utf-8")
+      .then((response) => response.data)
+      .then((data) => dispatch(setBoardsState(data)));
+
+    const fetchGroups = axios
+      .get("/groups", "utf-8")
+      .then((response) => response.data)
+      .then((data) => dispatch(setGroupsState(data)));
+
+    const fetchItems = axios
+      .get("/items", "utf-8")
+      .then((response) => response.data)
+      .then((data) => dispatch(setItemsState(data)));
+
+    Promise.all([fetchBoards, fetchGroups, fetchItems]);
+  };
+
+  const saveState = () => {
+    const postItems = axios.post("/items", itemsState);
+    const postGroups = axios.post("/groups", groupsState);
+    const postBoards = axios.post("/boards", boardsState);
+
+    Promise.all([postGroups]).then(console.log("post done"));
+  };
+
   return (
     <header className={`board-header ${!isOpen && "board-header-collapsed"}`}>
       <div className="flex-col">
@@ -89,20 +123,32 @@ const Header = () => {
           <p id="header-count">2 groups, 6 items</p>
         </section>
         <section className="header-buttons flex">
-          <button
-            className="btn-main blue-main"
-            onClick={() =>
-              dispatch(addGroup({ boardId: activeBoardId, title: "New group" }))
-            }
-          >
-            New group
-          </button>
-          <button className="btn-secondary" onClick={collapseGroups}>
-            Collapse all
-          </button>
-          <button className="btn-secondary" onClick={expandGroups}>
-            Expand all
-          </button>
+          <div style={{ gap: "30px", display: "flex" }}>
+            <button
+              className="btn-main blue-main"
+              onClick={() =>
+                dispatch(
+                  addGroup({ boardId: activeBoardId, title: "New group" })
+                )
+              }
+            >
+              New group
+            </button>
+            <button className="btn-secondary" onClick={collapseGroups}>
+              Collapse all
+            </button>
+            <button className="btn-secondary" onClick={expandGroups}>
+              Expand all
+            </button>
+          </div>
+          <div style={{ display: "flex", gap: "30px" }}>
+            <button className="btn-secondary" onClick={loadState}>
+              Load state
+            </button>
+            <button className="btn-secondary" onClick={saveState}>
+              Save state
+            </button>
+          </div>
         </section>
       </div>
     </header>

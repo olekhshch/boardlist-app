@@ -1,13 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addSectionToItem } from "../features/items/itemsSlice";
+import { openItemWindow } from "../features/menu/menuSlice";
 import Cell from "./Cell";
 
 const Item = ({ parent, groupLayout, statusList, setStatusList }) => {
   const { id, content } = parent;
   const dispatch = useDispatch();
 
-  console.log(groupLayout.content);
-  console.log(parent);
+  const openWindow = () => {
+    dispatch(openItemWindow({ item: parent }));
+  };
+
   return (
     <div className="item flex">
       {groupLayout.content.map((section) => {
@@ -28,7 +31,7 @@ const Item = ({ parent, groupLayout, statusList, setStatusList }) => {
           />
         );
       })}
-      <div className="table-section last"></div>
+      <div className="table-section last" onClick={openWindow}></div>
     </div>
   );
 };
