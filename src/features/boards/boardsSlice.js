@@ -1,12 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  allBoards: [
-    { id: "b1", title: "Tasks", description: "To do lists" },
-    { id: "b3", title: "Dishes", description: "Checked and to be checked" },
-  ],
-  lastIndex: 3,
-  activeBoardId: "b3",
+  allBoards: [{ id: "b1", title: "Initial board", description: "" }],
+  lastIndex: 1,
+  activeBoardId: "b1",
 };
 
 const boardsSlice = createSlice({

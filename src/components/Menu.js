@@ -5,6 +5,7 @@ import {
   closeMenu,
   setMenuCoordinates,
   openGroupThemePicker,
+  openStatusEditMenu,
 } from "../features/menu/menuSlice";
 import {
   toggleIsCollapsed,
@@ -13,6 +14,7 @@ import {
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import { addStatus } from "../features/statuses/statusesSlice";
+import StatusEditMenu from "./menus/StatusEditMenu";
 
 const Menu = () => {
   const {
@@ -125,6 +127,10 @@ const Menu = () => {
         </div>
       </div>
     );
+  }
+
+  if (menuType === "status-edit") {
+    return <StatusEditMenu />;
   }
 
   if (menuType === "add-section") {
@@ -266,9 +272,12 @@ const Menu = () => {
   if (menuType === "status-list") {
     const setStatus = (e) => {
       const newValue = e.target.dataset.colourValue;
-      console.log(itemId + "_ _ _" + sectionIndex + "__" + newValue);
       dispatch(changeValue({ newValue, itemId, layoutIndex: sectionIndex }));
       dispatch(closeMenu());
+    };
+
+    const openEditMenu = () => {
+      dispatch(openStatusEditMenu());
     };
 
     return (
@@ -294,7 +303,9 @@ const Menu = () => {
             );
           })}
         </div>
-        <button className="btn-secondary">Edit</button>
+        <button className="btn-secondary" onClick={openEditMenu}>
+          Edit
+        </button>
       </div>
     );
   }

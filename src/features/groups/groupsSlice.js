@@ -8,7 +8,19 @@ const defaultGroupLayout = {
 
 const groupsSlice = createSlice({
   name: "groups",
-  initialState,
+  initialState: {
+    lastIndex: 1,
+    allGroups: [
+      {
+        id: "g1",
+        boardId: "b1",
+        title: "Initial group",
+        isCollapsed: false,
+        theme: "blue",
+        groupLayout: defaultGroupLayout,
+      },
+    ],
+  },
   reducers: {
     setGroupsState: (state, { payload }) => {
       const { allGroups, lastIndex } = payload;

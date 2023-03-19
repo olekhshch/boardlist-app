@@ -3,7 +3,10 @@ import initialState from "./initialItemsState";
 
 const itemsSlice = createSlice({
   name: "items",
-  initialState,
+  initialState: {
+    lastIndex: 0,
+    allItems: [],
+  },
   reducers: {
     setItemsState: (state, { payload }) => {
       state.allItems = payload.allItems;

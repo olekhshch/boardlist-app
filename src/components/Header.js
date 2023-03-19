@@ -14,7 +14,7 @@ import {
   setGroupsState,
 } from "../features/groups/groupsSlice";
 import { setItemsState } from "../features/items/itemsSlice";
-
+import { setStatusesState } from "../features/statuses/statusesSlice";
 const Header = () => {
   const boardsState = useSelector((state) => state.boards);
   const { activeBoardId, allBoards } = boardsState;
@@ -24,6 +24,8 @@ const Header = () => {
   const activeBoard = allBoards.find((board) => board.id === activeBoardId);
 
   const itemsState = useSelector((state) => state.items);
+  const statusesState = useSelector((state) => state.statuses);
+
   let groups = allGroups.filter((group) => group.boardId === activeBoardId);
   const [boardNameValue, setBoardNameValue] = useState(activeBoard.title);
   const [boardDescValue, setBoardDescValue] = useState(activeBoard.description);
@@ -89,15 +91,23 @@ const Header = () => {
       .then((response) => response.data)
       .then((data) => dispatch(setItemsState(data)));
 
-    Promise.all([fetchBoards, fetchGroups, fetchItems]);
+    const fetchStatuses = axios
+      .get("/statuses", "utf-8")
+      .then((response) => response.data)
+      .then((data) => dispatch(setStatusesState(data)));
+
+    Promise.all([fetchBoards, fetchStatuses, fetchGroups, fetchItems]);
   };
 
   const saveState = () => {
     const postItems = axios.post("/items", itemsState);
     const postGroups = axios.post("/groups", groupsState);
     const postBoards = axios.post("/boards", boardsState);
+    const postStatuses = axios.post("/statuses", statusesState);
 
-    Promise.all([postGroups]).then(console.log("post done"));
+    Promise.all([postStatuses, postItems, postBoards, postGroups]).then(
+      console.log("post done")
+    );
   };
 
   return (

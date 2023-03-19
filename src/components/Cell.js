@@ -40,6 +40,7 @@ const Cell = ({ width, value, type, itemId, sectionIndex, statusId }) => {
         openStatusListMenu({
           type: "status-list",
           coordinates: { left, top },
+          statusId: status.id,
           statusContent: status.content,
           itemId,
           sectionIndex,

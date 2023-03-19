@@ -1,10 +1,10 @@
 :root {
     --black:rgb(16, 32, 64);
-    --grey-contour: rgb(121, 117, 136);
+    --grey-contour: rgb(183, 180, 193);
 
     --blue-main:rgb(19, 117, 233);
     --blue-bg: rgb(211, 221, 238);
-    --blue-grey: rgb(177, 184, 233);
+    --blue-grey: rgb(168, 171, 191);
 
     --green-main: rgb(17, 175, 83);
     --green-bg: rgb(195, 230, 199);
@@ -413,7 +413,7 @@ main {
 }
 
 .last {
-    min-width: 90px;
+    min-width: 180px;
     flex-grow: 1;
     text-align: left;
 }
@@ -584,4 +584,22 @@ main {
 .menu li:hover {
     cursor: pointer;
     text-shadow: 0px 0px 3px var(--grey-contour);
+}
+
+.status-edit-input {
+    background: none;
+    border: none;
+
+    margin: 0 5px;
+    width: 100px;
+
+    color: white;
+}
+
+.visible-hover {
+    opacity: 0;
+}
+
+.cell-status:hover .visible-hover {
+    opacity: 1;
 }

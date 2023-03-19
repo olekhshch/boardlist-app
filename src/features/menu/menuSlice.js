@@ -15,6 +15,7 @@ const initialState = {
     left: 100,
     top: 100,
   },
+  statusId: null,
   statusContent: null,
   itemId: null,
   groupId: null,
@@ -29,14 +30,25 @@ const menuSlice = createSlice({
   reducers: {
     openStatusListMenu: (state, { payload }) => {
       console.log(payload);
-      const { type, coordinates, statusContent, itemId, sectionIndex } =
-        payload;
+      const {
+        type,
+        coordinates,
+        statusContent,
+        statusId,
+        itemId,
+        sectionIndex,
+      } = payload;
       state.isOpen = true;
       state.menuType = type;
       state.coordinates = coordinates;
+      state.statusId = statusId;
       state.statusContent = statusContent;
       state.itemId = itemId;
       state.sectionIndex = sectionIndex;
+    },
+    openStatusEditMenu: (state, { payload }) => {
+      state.menuType = "status-edit";
+      state.isOpen = true;
     },
     openItemWindow: (state, { payload }) => {
       const { item } = payload;
@@ -76,6 +88,7 @@ export default menuSlice.reducer;
 
 export const {
   openStatusListMenu,
+  openStatusEditMenu,
   openItemWindow,
   openGroupMenu,
   openGroupThemePicker,
