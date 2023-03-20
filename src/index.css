@@ -204,6 +204,7 @@ li {
 
 main {
     padding-top: 140px;
+    min-width: fit-content;
 }
 
 #sidebar-settings-btn {
@@ -458,6 +459,7 @@ main {
     font-size: var(--table-item-font-size);
     padding: 4px 2px;
     min-width: 260px;
+    width: 100%;
     border-top: 1px solid var(--grey-contour);
     border-bottom: 1px solid var(--grey-contour);
 
@@ -468,6 +470,8 @@ main {
     margin-left: 12px;
     padding-left: 6px;
     margin-right: 100px;
+
+    max-width: 400px;
 }
 
 .item .table-section {
@@ -601,5 +605,19 @@ main {
 }
 
 .cell-status:hover .visible-hover {
+    opacity: 1;
+}
+
+.table-header-settings {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.hd-conteiner:hover .table-header-settings {
     opacity: 1;
 }

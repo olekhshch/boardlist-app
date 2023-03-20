@@ -6,11 +6,14 @@ group-menu
 group-theme
 status-list
 item-window
+
+section-settings [main, text, status, number, priority]
 */
 
 const initialState = {
   isOpen: false,
   menuType: "",
+  subType: "",
   coordinates: {
     left: 100,
     top: 100,
@@ -74,6 +77,12 @@ const menuSlice = createSlice({
       state.group = group;
       state.isOpen = true;
     },
+    openSectionSettingsMenu: (state, { payload }) => {
+      const { menuType, subType, coordinates } = payload;
+      state.subType = subType;
+      state.coordinates = coordinates;
+      state.isOpen = true;
+    },
     setMenuCoordinates: (state, { payload }) => {
       const { coordinates } = payload;
       state.coordinates = coordinates;
@@ -93,6 +102,7 @@ export const {
   openGroupMenu,
   openGroupThemePicker,
   openTableSectionMenu,
+  openSectionSettingsMenu,
   closeMenu,
   setMenuCoordinates,
 } = menuSlice.actions;

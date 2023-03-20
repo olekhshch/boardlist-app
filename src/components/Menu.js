@@ -11,10 +11,14 @@ import {
   toggleIsCollapsed,
   setTheme,
   addGroupLayoutSection,
+  addNumberSection,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import { addStatus } from "../features/statuses/statusesSlice";
 import StatusEditMenu from "./menus/StatusEditMenu";
+
+import { TiDocumentText } from "react-icons/ti";
+import { TbNumbers, TbLayoutList, TbFlag3Filled } from "react-icons/tb";
 
 const Menu = () => {
   const {
@@ -134,8 +138,7 @@ const Menu = () => {
   }
 
   if (menuType === "add-section") {
-    const addLayoutSection = (e) => {
-      const type = e.target.innerHTML;
+    const addLayoutSection = (type) => {
       const { lastIndex } = group.groupLayout;
       if (type === "text") {
         dispatch(
@@ -165,6 +168,18 @@ const Menu = () => {
           })
         );
       }
+      if (type === "number") {
+        dispatch(
+          addSectionToItems({
+            type,
+            groupId: group.id,
+            newIndex: `t${lastIndex + 1}`,
+          })
+        );
+        dispatch(
+          addNumberSection({ groupId: group.id, newIndex: `t${lastIndex + 1}` })
+        );
+      }
       dispatch(closeMenu());
     };
 
@@ -178,10 +193,34 @@ const Menu = () => {
         }}
       >
         <ul>
-          <li onClick={addLayoutSection}>text</li>
-          <li onClick={addLayoutSection}>number</li>
-          <li onClick={addLayoutSection}>status</li>
-          <li onClick={addLayoutSection}>priority</li>
+          <li
+            onClick={() => addLayoutSection("text")}
+            style={{ alignItems: "center", display: "flex" }}
+          >
+            <TiDocumentText style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
+            text
+          </li>
+          <li
+            onClick={() => addLayoutSection("number")}
+            style={{ alignItems: "center", display: "flex" }}
+          >
+            <TbNumbers style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
+            number
+          </li>
+          <li
+            onClick={() => addLayoutSection("status")}
+            style={{ alignItems: "center", display: "flex" }}
+          >
+            <TbLayoutList style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
+            status
+          </li>
+          <li
+            onClick={() => addLayoutSection("priority")}
+            style={{ alignItems: "center", display: "flex" }}
+          >
+            <TbFlag3Filled style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
+            priority
+          </li>
         </ul>
       </div>
     );

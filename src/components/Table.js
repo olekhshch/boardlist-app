@@ -4,15 +4,16 @@ import { addItem } from "../features/items/itemsSlice";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { setSectionWidth } from "../features/groups/groupsSlice";
-import { openTableSectionMenu } from "../features/menu/menuSlice";
+import {
+  openTableSectionMenu,
+  openSectionSettingsMenu,
+} from "../features/menu/menuSlice";
+import { BiDotsHorizontal } from "react-icons/bi";
 
 const Table = ({
   parent,
   setIsMenuOpen,
   currentGroup,
-  setCurrentGroup,
-  setMenuCoordinates,
-  setMenuType,
   menuType,
   statusList,
   setStatusList,
@@ -70,21 +71,37 @@ const Table = ({
     >
       <div className="table-header flex">
         {groupLayout.content.map((section) => {
-          const { index, width, title } = section;
+          const { index, width, title, type } = section;
+
+          const openMenu = (e) => {
+            const { left, top } = e.target.getBoundingClientRect();
+            dispatch(
+              openSectionSettingsMenu({
+                menuType: "section-settings",
+                subType: type,
+                coordinates: { left, top },
+              })
+            );
+          };
           return (
-            <div
-              key={index}
-              className="table-section flex"
-              style={{ width: `${width}px` }}
-            >
-              <div className="flex-grow-1">{title}</div>
+            <div className="hd-conteiner" style={{ position: "relative" }}>
               <div
-                className="divider"
-                onMouseDown={(e) => dividerMousedown(e)}
-                data-layoutid={index}
-                data-groupid={id}
-                data-width={width}
-              ></div>
+                key={index}
+                className="table-section flex"
+                style={{ width: `${width}px` }}
+              >
+                <div className="flex-grow-1">{title}</div>
+                <div
+                  className="divider"
+                  onMouseDown={(e) => dividerMousedown(e)}
+                  data-layoutid={index}
+                  data-groupid={id}
+                  data-width={width}
+                ></div>
+              </div>
+              <button className="table-header-settings" onClick={openMenu}>
+                <BiDotsHorizontal />
+              </button>
             </div>
           );
         })}
@@ -116,7 +133,7 @@ const Table = ({
       </div>
       <form
         className="add-item flex-col"
-        style={{ backgroundColor: `var(--${theme}-bg)`, width: "100%" }}
+        style={{ backgroundColor: `var(--${theme}-bg)` }}
         onSubmit={handleSubmit}
       >
         <input

@@ -36,7 +36,12 @@ const itemsSlice = createSlice({
     },
     addSectionToItems: (state, { payload }) => {
       const { type, groupId, newIndex } = payload;
-      const newSection = { layoutIndex: newIndex, value: "", type };
+      console.log("HERE");
+      const newSection = {
+        layoutIndex: newIndex,
+        value: "",
+        type,
+      };
       const newItems = state.allItems.map((item) => {
         if (item.groupId === groupId) {
           const newContent = [...item.content, newSection];

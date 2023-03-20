@@ -59,6 +59,23 @@ const Cell = ({ width, value, type, itemId, sectionIndex, statusId }) => {
     );
   }
 
+  if (type === "number") {
+    return (
+      <form
+        className="table-section flex-col"
+        style={{ width: `${width}px` }}
+        onSubmit={handleSubmit}
+      >
+        <input
+          type="number"
+          className="flex-grow-1"
+          value={cellValue}
+          onChange={(e) => setCellValue(e.target.value)}
+        />
+      </form>
+    );
+  }
+
   //type === 'text'
   return (
     <form

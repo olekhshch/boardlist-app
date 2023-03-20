@@ -83,8 +83,29 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    addNumberSection: (state, { payload }) => {
+      const { groupId, newIndex } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { lastIndex, content } = group.groupLayout;
+          const newLastIndex = lastIndex + 1;
+          const newSection = {
+            index: `t${newLastIndex}`,
+            type: "number",
+            increment: 1,
+            unit: "",
+            title: "Number",
+            width: 120,
+          };
+          const newContent = [...content, newSection];
+          const newLayout = { lastIndex: newLastIndex, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
     setSectionWidth: (state, { payload }) => {
-      console.log(payload);
       const { sectionId, groupId, newWidth } = payload;
       const newGroups = state.allGroups.map((group) => {
         if (group.id === groupId) {
@@ -151,6 +172,7 @@ export const {
   addGroup,
   renameGroup,
   addGroupLayoutSection,
+  addNumberSection,
   setSectionWidth,
   toggleIsCollapsed,
   collapseAll,
