@@ -23,6 +23,7 @@ const initialState = {
   itemId: null,
   groupId: null,
   group: null,
+  sectionId: null,
   item: null,
   sectionIndex: null,
 };
@@ -78,9 +79,13 @@ const menuSlice = createSlice({
       state.isOpen = true;
     },
     openSectionSettingsMenu: (state, { payload }) => {
-      const { menuType, subType, coordinates } = payload;
+      console.log(payload);
+      const { menuType, subType, coordinates, groupId, sectionId } = payload;
+      state.menuType = menuType;
       state.subType = subType;
       state.coordinates = coordinates;
+      state.groupId = groupId;
+      state.sectionId = sectionId;
       state.isOpen = true;
     },
     setMenuCoordinates: (state, { payload }) => {

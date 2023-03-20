@@ -80,6 +80,8 @@ const Table = ({
                 menuType: "section-settings",
                 subType: type,
                 coordinates: { left, top },
+                groupId: id,
+                sectionId: index,
               })
             );
           };

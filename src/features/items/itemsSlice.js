@@ -52,6 +52,20 @@ const itemsSlice = createSlice({
       state.allItems = newItems;
       console.log(state.allItems);
     },
+    removeItemSection: (state, { payload }) => {
+      const { groupId, sectionId } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.groupId === groupId) {
+          const { content } = item;
+          const newContent = content.filter(
+            (section) => section.layoutIndex !== sectionId
+          );
+          return { ...item, content: newContent };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
     changeValue: (state, { payload }) => {
       const { newValue, itemId, layoutIndex } = payload;
       const newItems = state.allItems.map((item) => {
@@ -75,5 +89,10 @@ const itemsSlice = createSlice({
 
 export default itemsSlice.reducer;
 
-export const { addItem, addSectionToItems, changeValue, setItemsState } =
-  itemsSlice.actions;
+export const {
+  addItem,
+  addSectionToItems,
+  changeValue,
+  setItemsState,
+  removeItemSection,
+} = itemsSlice.actions;

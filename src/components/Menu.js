@@ -19,6 +19,7 @@ import StatusEditMenu from "./menus/StatusEditMenu";
 
 import { TiDocumentText } from "react-icons/ti";
 import { TbNumbers, TbLayoutList, TbFlag3Filled } from "react-icons/tb";
+import TableHeaderSectionMenu from "./menus/TableHeaderSectionMenu";
 
 const Menu = () => {
   const {
@@ -308,6 +309,9 @@ const Menu = () => {
     );
   }
 
+  if (menuType === "section-settings") {
+    return <TableHeaderSectionMenu />;
+  }
   if (menuType === "status-list") {
     const setStatus = (e) => {
       const newValue = e.target.dataset.colourValue;
