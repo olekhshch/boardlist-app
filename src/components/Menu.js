@@ -20,6 +20,9 @@ import StatusEditMenu from "./menus/StatusEditMenu";
 import { TiDocumentText } from "react-icons/ti";
 import { TbNumbers, TbLayoutList, TbFlag3Filled } from "react-icons/tb";
 import TableHeaderSectionMenu from "./menus/TableHeaderSectionMenu";
+import SectionRenameMenu from "./menus/SectionRenameMenu";
+import CellTextarea from "./menus/CellTextarea";
+import NumberParametersWindow from "./menus/NumberParametersWindow";
 
 const Menu = () => {
   const {
@@ -62,10 +65,14 @@ const Menu = () => {
         style={{ left: coordinates.left, top: coordinates.top }}
       >
         <ul>
-          <li onClick={collapseGroup}>Collapse</li>
-          <li onClick={openThemeMenu}>Change colour</li>
-          <li>Rename</li>
-          <li>Delete</li>
+          <li className="list-animation" onClick={collapseGroup}>
+            Collapse
+          </li>
+          <li className="list-animation" onClick={openThemeMenu}>
+            Change colour
+          </li>
+          <li className="list-animation">Rename</li>
+          <li className="list-animation">Delete</li>
         </ul>
       </div>
     );
@@ -312,6 +319,19 @@ const Menu = () => {
   if (menuType === "section-settings") {
     return <TableHeaderSectionMenu />;
   }
+
+  if (menuType === "section-rename") {
+    return <SectionRenameMenu />;
+  }
+
+  if (menuType === "cell-textarea") {
+    return <CellTextarea />;
+  }
+
+  if (menuType === "number-parameters") {
+    return <NumberParametersWindow />;
+  }
+
   if (menuType === "status-list") {
     const setStatus = (e) => {
       const newValue = e.target.dataset.colourValue;

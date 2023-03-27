@@ -21,8 +21,7 @@ const Table = ({
   const { groupLayout, id, theme } = parent;
   const { allItems } = useSelector((state) => state.items);
   const groupItems = allItems.filter((item) => item.groupId === id);
-  console.log(allItems);
-  console.log(groupLayout);
+
   const [newItemInput, setNewItemInput] = useState("");
 
   const dispatch = useDispatch();
@@ -70,6 +69,9 @@ const Table = ({
       style={{ borderColor: `var(--${theme}-main)` }}
     >
       <div className="table-header flex">
+        <div className="table-checkbox flex-col">
+          <input type="checkbox" />
+        </div>
         {groupLayout.content.map((section) => {
           const { index, width, title, type } = section;
 
@@ -82,17 +84,27 @@ const Table = ({
                 coordinates: { left, top },
                 groupId: id,
                 sectionId: index,
+                section,
+                initialInputValue: title,
               })
             );
           };
           return (
-            <div className="hd-conteiner" style={{ position: "relative" }}>
+            <div
+              key={index}
+              className="hd-conteiner"
+              style={{ position: "relative" }}
+            >
               <div
-                key={index}
                 className="table-section flex"
                 style={{ width: `${width}px` }}
               >
-                <div className="flex-grow-1">{title}</div>
+                <div className="flex-grow-1">
+                  {title}
+                  {type === "number" &&
+                    section.unit !== "" &&
+                    ` [${section.unit}]`}
+                </div>
                 <div
                   className="divider"
                   onMouseDown={(e) => dividerMousedown(e)}

@@ -53,6 +53,14 @@
     font-family: 'Outfit', sans-serif;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
 .blue-main {
     background-color: var(--blue-main);
 }
@@ -67,6 +75,10 @@
 
 .red-main {
     background-color: var(--red-main);
+}
+
+button {
+    cursor: pointer;
 }
 
 li {
@@ -164,6 +176,7 @@ li {
 .board-header {
     margin-left: calc(var(--sb-width) + 60px);
     position: fixed;
+    z-index: 50;
     left: 0px;
     right: 0;
     min-height: 20px;
@@ -620,4 +633,151 @@ main {
 
 .hd-conteiner:hover .table-header-settings {
     opacity: 1;
+}
+
+@keyframes menuOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes semi-appearing {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+@keyframes appearing {
+    from {
+        opacity: 0.3;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.list-animation {
+    animation-name: menuOpen;
+    animation-duration: 0.6s;
+}
+
+.cell-btn-conteiner {
+    position: absolute;
+    display: flex;
+    top: 0;
+    right: 0;
+}
+
+.cell-btn-conteiner button {
+    font-size: 1.2em;
+    background: none;
+    border: none;
+    opacity: 0;
+}
+
+.cell-btn-conteiner button .icon {
+    margin-top: 2px;
+    font-size: 1.2em;
+}
+
+.cell-container:hover .cell-btn-conteiner button {
+    animation: semi-appearing 0.6s forwards;
+}
+
+.cell-btn-conteiner button:hover {
+    opacity: 1;
+}
+
+.menu textarea:focus {
+    outline: none;
+}
+
+.table-checkbox {
+    justify-content: center;
+    flex-shrink: 0;
+    height: 1.5em;
+    width: 1.5em;
+    text-align: center;
+    font-size: var(--table-item-font-size);
+    border-top: 1px solid var(--grey-contour);
+}
+
+.table-checkbox input {
+    margin: auto;
+    width: 12px;
+}
+
+.selectedItems-modal {
+    position: fixed;
+    z-index: 200;
+    left: 44%;
+    height: fit-content;
+    bottom: 40px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px var(--black);
+    user-select: none;
+}
+
+.selected-items-count {
+    padding: 2px 16px;
+    font-size: 44px;
+
+    background-color: var(--blue-main);
+    color: white;
+
+    border-radius: 10px 0 0 10px;
+    user-select: none;
+}
+
+.selectedItems-modal p{
+    font-size: 1.4em;
+}
+
+.selectedItems-modal .flex-col {
+    padding: 2px 40px 2px 6px;
+    border-right: 1px solid var(--grey-contour);
+    user-select: none;
+
+}
+
+@keyframes blueColorChange {
+    from {
+        color: var(--black)
+    }
+
+    to {
+        color: var(--blue-main)
+    }
+}
+
+.selected-items-modal-btn {
+    width: 76px;
+    background: none;
+    border: none;
+}
+
+.selected-items-modal-btn:hover {
+    animation-name: blueColorChange;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+}
+
+.cross-btn {
+    margin: 0;
+    padding: 0;
+    font-size: 48px;
+    font-weight: lighter;
+    transform: rotate(45deg);
 }

@@ -105,6 +105,23 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    setNumberParameters: (state, { payload }) => {
+      const { groupId, sectionId, unit, increment } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { lastIndex, content } = group.groupLayout;
+          const newContent = content.map((section) => {
+            if (section.index === sectionId) {
+              return { ...section, unit, increment };
+            }
+            return section;
+          });
+          return { ...group, groupLayout: { lastIndex, content: newContent } };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
     setSectionWidth: (state, { payload }) => {
       const { sectionId, groupId, newWidth } = payload;
       const newGroups = state.allGroups.map((group) => {
@@ -132,6 +149,24 @@ const groupsSlice = createSlice({
           const newContent = content.filter(
             (section) => section.index !== sectionId
           );
+          const newLayout = { lastIndex, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
+    renameSection: (state, { payload }) => {
+      const { groupId, sectionId, newTitle } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { lastIndex, content } = group.groupLayout;
+          const newContent = content.map((section) => {
+            if (section.index === sectionId) {
+              return { ...section, title: newTitle };
+            }
+            return section;
+          });
           const newLayout = { lastIndex, content: newContent };
           return { ...group, groupLayout: newLayout };
         }
@@ -188,8 +223,10 @@ export const {
   renameGroup,
   addGroupLayoutSection,
   addNumberSection,
+  setNumberParameters,
   setSectionWidth,
   removeSection,
+  renameSection,
   toggleIsCollapsed,
   collapseAll,
   expandAll,

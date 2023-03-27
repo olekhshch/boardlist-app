@@ -7,13 +7,12 @@ import { setItemsState } from "./features/items/itemsSlice";
 import { setBoardsState } from "./features/boards/boardsSlice";
 import { setGroupsState } from "./features/groups/groupsSlice";
 import axios from "axios";
+import ItemSelectedModal from "./components/ItemSelectedModal";
 
 const App = () => {
   const { isOpen } = useSelector((state) => state.menu);
+  const { selectedItems } = useSelector((state) => state.system);
   const [isLoading, setIsLoading] = useState(true);
-  const items = useSelector((state) => state.items);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(false);
@@ -28,6 +27,7 @@ const App = () => {
       <Sidebar />
       <ActiveBoard />
       {isOpen && <Menu />}
+      {Object.keys(selectedItems).length !== 0 && <ItemSelectedModal />}
     </>
   );
 };

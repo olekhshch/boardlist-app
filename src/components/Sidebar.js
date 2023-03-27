@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { useEffect, useRef } from "react";
 import { AiOutlineRight } from "react-icons/ai";
+import { resetSelectedItems } from "../features/system/systemSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,6 @@ const Sidebar = () => {
   const { allBoards, activeBoardId, lastIndex } = useSelector(
     (state) => state.boards
   );
-
-  const { allGroups } = useSelector((state) => state.groups);
 
   const sbRef = useRef(null);
 
@@ -46,6 +45,13 @@ const Sidebar = () => {
       </>
     );
   }
+
+  const changeActive = (newId) => {
+    if (newId !== activeBoardId) {
+      dispatch(resetSelectedItems());
+      dispatch(setActiveBoard(newId));
+    }
+  };
 
   const handleChange = (e) => {
     dispatch(setInputValue(e.target.value));
@@ -83,10 +89,11 @@ const Sidebar = () => {
             return (
               <div
                 key={id}
+                data-board-id={id}
                 className={`sb-list-item flex ${
                   activeBoardId === id && "sb-list-active"
                 }`}
-                onClick={() => dispatch(setActiveBoard(id))}
+                onClick={() => changeActive(id)}
               >
                 <div className="flex-grow-1">{title}</div>
                 <BiDotsHorizontal className="icon" />

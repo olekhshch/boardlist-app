@@ -5,6 +5,7 @@ import groupReducer from "../features/groups/groupsSlice";
 import itemsReducer from "../features/items/itemsSlice";
 import statusesReducer from "../features/statuses/statusesSlice";
 import menuReducer from "../features/menu/menuSlice";
+import systemReducer from "../features/system/systemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     items: itemsReducer,
     statuses: statusesReducer,
     menu: menuReducer,
+    system: systemReducer,
   },
 });

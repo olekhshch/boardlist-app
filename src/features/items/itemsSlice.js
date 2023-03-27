@@ -36,7 +36,6 @@ const itemsSlice = createSlice({
     },
     addSectionToItems: (state, { payload }) => {
       const { type, groupId, newIndex } = payload;
-      console.log("HERE");
       const newSection = {
         layoutIndex: newIndex,
         value: "",
@@ -50,7 +49,6 @@ const itemsSlice = createSlice({
         return item;
       });
       state.allItems = newItems;
-      console.log(state.allItems);
     },
     removeItemSection: (state, { payload }) => {
       const { groupId, sectionId } = payload;
@@ -82,7 +80,6 @@ const itemsSlice = createSlice({
         return item;
       });
       state.allItems = newItems;
-      console.log(state.allItems);
     },
   },
 });

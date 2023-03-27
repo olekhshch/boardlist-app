@@ -2,7 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSection } from "../../features/groups/groupsSlice";
 import { removeItemSection } from "../../features/items/itemsSlice";
-import { closeMenu } from "../../features/menu/menuSlice";
+import {
+  closeMenu,
+  openNumberParameters,
+  openSectionRename,
+} from "../../features/menu/menuSlice";
 
 const TableHeaderSectionMenu = () => {
   const { subType, coordinates, groupId, sectionId } = useSelector(
@@ -17,6 +21,10 @@ const TableHeaderSectionMenu = () => {
     dispatch(closeMenu());
   };
 
+  const rename = () => {
+    dispatch(openSectionRename());
+  };
+
   if (subType === "main") {
     return (
       <div
@@ -24,7 +32,7 @@ const TableHeaderSectionMenu = () => {
         style={{ left: coordinates.left, top: coordinates.top }}
       >
         <ul>
-          <li>Rename</li>
+          <li onClick={rename}>Rename</li>
           <li>Add description</li>
         </ul>
       </div>
@@ -38,7 +46,7 @@ const TableHeaderSectionMenu = () => {
         style={{ left: coordinates.left, top: coordinates.top }}
       >
         <ul>
-          <li>Rename</li>
+          <li onClick={rename}>Rename</li>
           <li>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -53,7 +61,10 @@ const TableHeaderSectionMenu = () => {
         style={{ left: coordinates.left, top: coordinates.top }}
       >
         <ul>
-          <li>Rename</li>
+          <li style={{ borderBottom: "1px solid var(--grey-contour" }}>
+            Filter...
+          </li>
+          <li onClick={rename}>Rename</li>
           <li>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -62,13 +73,27 @@ const TableHeaderSectionMenu = () => {
   }
 
   if (subType === "number") {
+    const openParameters = () => {
+      const newCoordinates = {
+        left: coordinates.left + 10,
+        top: coordinates.top - 10,
+      };
+      dispatch(openNumberParameters({ coordinates: newCoordinates }));
+    };
+
     return (
       <div
         className="menu"
         style={{ left: coordinates.left, top: coordinates.top }}
       >
         <ul>
-          <li>Rename</li>
+          <li
+            onClick={openParameters}
+            style={{ borderBottom: "1px solid var(--grey-contour" }}
+          >
+            Set parameters...
+          </li>
+          <li onClick={rename}>Rename</li>
           <li>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>

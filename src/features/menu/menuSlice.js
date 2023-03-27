@@ -8,6 +8,10 @@ status-list
 item-window
 
 section-settings [main, text, status, number, priority]
+section-rename
+
+cell-textarea
+number-parameters
 */
 
 const initialState = {
@@ -18,6 +22,7 @@ const initialState = {
     left: 100,
     top: 100,
   },
+  width: 60,
   statusId: null,
   statusContent: null,
   itemId: null,
@@ -26,6 +31,8 @@ const initialState = {
   sectionId: null,
   item: null,
   sectionIndex: null,
+  section: null,
+  initialInputValue: "",
 };
 
 const menuSlice = createSlice({
@@ -79,14 +86,44 @@ const menuSlice = createSlice({
       state.isOpen = true;
     },
     openSectionSettingsMenu: (state, { payload }) => {
-      console.log(payload);
-      const { menuType, subType, coordinates, groupId, sectionId } = payload;
+      const {
+        menuType,
+        subType,
+        coordinates,
+        groupId,
+        sectionId,
+        section,
+        initialInputValue,
+      } = payload;
+
       state.menuType = menuType;
       state.subType = subType;
       state.coordinates = coordinates;
       state.groupId = groupId;
       state.sectionId = sectionId;
+      state.section = section;
+      state.initialInputValue = initialInputValue;
       state.isOpen = true;
+    },
+    openSectionRename: (state, { payload }) => {
+      state.menuType = "section-rename";
+    },
+    expandCellTextarea: (state, { payload }) => {
+      const { coordinates, width, sectionId, initialInputValue, itemId } =
+        payload;
+      console.log(payload);
+      state.menuType = "cell-textarea";
+      state.itemId = itemId;
+      state.sectionId = sectionId;
+      state.coordinates = coordinates;
+      state.width = width;
+      state.initialInputValue = initialInputValue;
+      state.isOpen = true;
+    },
+    openNumberParameters: (state, { payload }) => {
+      const { coordinates } = payload;
+      state.menuType = "number-parameters";
+      state.coordinates = coordinates;
     },
     setMenuCoordinates: (state, { payload }) => {
       const { coordinates } = payload;
@@ -108,6 +145,9 @@ export const {
   openGroupThemePicker,
   openTableSectionMenu,
   openSectionSettingsMenu,
+  openSectionRename,
+  expandCellTextarea,
+  openNumberParameters,
   closeMenu,
   setMenuCoordinates,
 } = menuSlice.actions;
