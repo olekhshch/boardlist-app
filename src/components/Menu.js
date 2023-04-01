@@ -38,6 +38,7 @@ const Menu = () => {
     group,
     sectionIndex,
     item,
+    showArchieved,
   } = useSelector((state) => state.menu);
 
   const statusesState = useSelector((state) => state.statuses);

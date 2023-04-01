@@ -16,6 +16,7 @@ const itemsSlice = createSlice({
       const { groupId, layout, mainValue } = payload;
       state.lastIndex = state.lastIndex + 1;
       const id = `i${state.lastIndex}`;
+      const rawCreationDate = Date.now();
       const content = layout.map((section) => {
         const { index, type } = section;
         if (index === "t1") {
@@ -29,10 +30,21 @@ const itemsSlice = createSlice({
       const newItem = {
         id,
         groupId,
+        rawCreationDate,
         content,
+        isArchieved: false,
         notes: [],
       };
       state.allItems = [...state.allItems, newItem];
+    },
+    archieveItemsById: (state, { payload }) => {
+      const { itemIds } = payload;
+      state.allItems = state.allItems.map((item) => {
+        if (itemIds.includes(item.id)) {
+          return { ...item, isArchieved: true };
+        }
+        return item;
+      });
     },
     deleteItemsById: (state, { payload }) => {
       const { selectedItemIds } = payload;
@@ -112,6 +124,7 @@ export default itemsSlice.reducer;
 
 export const {
   addItem,
+  archieveItemsById,
   deleteItemsById,
   deleteItemsByGroup,
   duplicateItemsById,

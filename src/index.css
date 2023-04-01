@@ -4,7 +4,7 @@
 
     --blue-main:rgb(19, 117, 233);
     --blue-bg: rgb(211, 221, 238);
-    --blue-grey: rgb(168, 171, 191);
+    --blue-grey: rgb(182, 186, 210);
 
     --green-main: rgb(17, 175, 83);
     --green-bg: rgb(195, 230, 199);
@@ -797,4 +797,11 @@ main {
 
 .main-btn-conteiner button {
     all: unset;
+}
+
+.table-show-archieved {
+    padding-left: 40px;
+    cursor: pointer;
+    border-top: 1px solid var(--grey-contour);
+    color:white;
 }

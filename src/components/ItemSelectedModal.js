@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  archieveItemsById,
   deleteItemsById,
   duplicateItemsById,
 } from "../features/items/itemsSlice";
@@ -33,6 +34,11 @@ const ItemSelectedModal = () => {
     dispatch(duplicateItemsById({ selectedItemIds: allSelected }));
   };
 
+  const archieveSelected = () => {
+    dispatch(archieveItemsById({ itemIds: allSelected }));
+    dispatch(resetSelectedItems());
+  };
+
   return (
     <div className="selectedItems-modal flex">
       <div className="selected-items-count">{overallCount}</div>
@@ -47,7 +53,10 @@ const ItemSelectedModal = () => {
         <button className="selected-items-modal-btn" onClick={deleteSelected}>
           Delete
         </button>
-        <button className="selected-items-modal-btn">Archive</button>
+        <button className="selected-items-modal-btn" onClick={archieveSelected}>
+          Archive
+        </button>
+        <button className="selected-items-modal-btn">Unarchive</button>
         <button
           className="selected-items-modal-btn"
           onClick={duplicateSelected}

@@ -26,6 +26,7 @@ const Group = ({
   const itemsCount = groupItems.length;
 
   const [groupTitle, setGroupTitle] = useState(title);
+  const [showArchieved, setShowArchieved] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +37,6 @@ const Group = ({
   };
 
   const toggleGroupMenu = (e) => {
-    console.log("mmm");
     const { left, top } = e.target.getBoundingClientRect();
     console.log(left);
     dispatch(
@@ -95,6 +95,8 @@ const Group = ({
         menuType={menuType}
         statusList={statusList}
         setStatusList={setStatusList}
+        showArchieved={showArchieved}
+        setShowArchieved={setShowArchieved}
       ></Table>
     </div>
   );

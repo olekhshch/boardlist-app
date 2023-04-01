@@ -14,6 +14,7 @@ const groupsSlice = createSlice({
       {
         id: "g1",
         boardId: "b1",
+        rawCreationDate: Date.now(),
         title: "Initial group",
         isCollapsed: false,
         theme: "blue",
@@ -34,9 +35,10 @@ const groupsSlice = createSlice({
       const title = payload.title ? payload.title : "New group";
       const groupLayout = defaultGroupLayout;
       const theme = "blue";
+      const rawCreationDate = Date.now();
       state.allGroups = [
         ...state.allGroups,
-        { id, boardId, title, theme, groupLayout },
+        { id, boardId, title, theme, groupLayout, rawCreationDate },
       ];
     },
     renameGroup: (state, { payload }) => {

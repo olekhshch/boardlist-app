@@ -20,10 +20,18 @@ const Table = ({
   menuType,
   statusList,
   setStatusList,
+  showArchieved,
+  setShowArchieved,
 }) => {
   const { groupLayout, id, theme } = parent;
   const { allItems } = useSelector((state) => state.items);
-  const groupItems = allItems.filter((item) => item.groupId === id);
+  const allGroupItems = allItems.filter((item) => item.groupId === id);
+  const unarchievedItems = allGroupItems.filter(
+    (item) => item.isArchieved === false
+  );
+  const archievedItems = allGroupItems.filter(
+    (item) => item.isArchieved === true
+  );
 
   const [newItemInput, setNewItemInput] = useState("");
 
@@ -43,7 +51,10 @@ const Table = ({
   const openAddSectionMenu = (e) => {
     const { left, top } = e.target.getBoundingClientRect();
     dispatch(
-      openTableSectionMenu({ coordinates: { left, top }, group: parent })
+      openTableSectionMenu({
+        coordinates: { left, top },
+        group: parent,
+      })
     );
   };
 
@@ -67,7 +78,7 @@ const Table = ({
   };
 
   const selectAllItems = () => {
-    const itemIds = groupItems.map((item) => item.id);
+    const itemIds = allGroupItems.map((item) => item.id);
     dispatch(selectItemsByGroup({ groupId: id, allItemIds: itemIds }));
     document
       .querySelectorAll(`input[data-parent-id="${id}"]`)
@@ -168,7 +179,7 @@ const Table = ({
         </div>
       </div>
       <div className="table-items flex-col">
-        {groupItems.map((item) => {
+        {unarchievedItems.map((item) => {
           return (
             <Item
               key={item.id}
@@ -180,6 +191,28 @@ const Table = ({
             />
           );
         })}
+        {showArchieved &&
+          archievedItems.map((item) => {
+            return (
+              <Item
+                key={item.id}
+                parent={item}
+                groupLayout={groupLayout}
+                statusList={statusList}
+                setStatusList={setStatusList}
+                theme={theme}
+              />
+            );
+          })}
+        {!showArchieved && archievedItems.length > 0 && (
+          <div
+            className="table-show-archieved"
+            style={{ backgroundColor: `var(--${theme}-grey)` }}
+            onClick={() => setShowArchieved(true)}
+          >
+            Show archieved
+          </div>
+        )}
       </div>
       <form
         className="add-item flex-col"

@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialRawCreationDate = Date.now();
 
 const initialState = {
-  allBoards: [{ id: "b1", title: "Initial board", description: "" }],
+  allBoards: [
+    {
+      id: "b1",
+      title: "Initial board",
+      description: "",
+      rawCreationDate: initialRawCreationDate,
+    },
+  ],
   lastIndex: 1,
   activeBoardId: "b1",
 };
@@ -19,7 +27,13 @@ const boardsSlice = createSlice({
     addBoard: (state, { payload }) => {
       state.lastIndex += 1;
       let id = `b${state.lastIndex}`;
-      const newBoard = { id, title: payload, description: "" };
+      const rawCreationDate = Date.now();
+      const newBoard = {
+        id,
+        title: payload,
+        description: "",
+        rawCreationDate,
+      };
       state.allBoards = [...state.allBoards, newBoard];
     },
     setActiveBoard: (state, { payload }) => {
