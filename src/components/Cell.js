@@ -9,6 +9,7 @@ import {
 import { GoNote } from "react-icons/go";
 import { CgExpand } from "react-icons/cg";
 import { BsFillArrowUpCircleFill, BsArrowDownCircleFill } from "react-icons/bs";
+import Notes from "./icons/Notes";
 
 const Cell = ({
   width,
@@ -18,6 +19,7 @@ const Cell = ({
   sectionIndex,
   increment,
   statusId,
+  theme,
 }) => {
   const dispatch = useDispatch();
   const { allStatuses } = useSelector((state) => state.statuses);
@@ -146,8 +148,10 @@ const Cell = ({
             onChange={(e) => setCellValue(e.target.value)}
           />
         </form>
-        <div className="cell-btn-conteiner">
-          <button>N</button>
+        <div className="main-btn-conteiner">
+          <button style={{ margin: "3px 6px" }}>
+            <Notes height="20" colour={theme} />
+          </button>
         </div>
       </div>
     );

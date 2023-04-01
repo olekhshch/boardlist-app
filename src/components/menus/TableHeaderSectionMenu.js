@@ -5,6 +5,7 @@ import { removeItemSection } from "../../features/items/itemsSlice";
 import {
   closeMenu,
   openNumberParameters,
+  openSectionDescriptionWindow,
   openSectionRename,
 } from "../../features/menu/menuSlice";
 
@@ -25,6 +26,11 @@ const TableHeaderSectionMenu = () => {
     dispatch(openSectionRename());
   };
 
+  const openAddDescription = (e) => {
+    const { left, top } = e.target.getBoundingClientRect();
+    dispatch(openSectionDescriptionWindow({ coordinates: { left, top } }));
+  };
+
   if (subType === "main") {
     return (
       <div
@@ -33,7 +39,7 @@ const TableHeaderSectionMenu = () => {
       >
         <ul>
           <li onClick={rename}>Rename</li>
-          <li>Add description</li>
+          <li onClick={openAddDescription}>Add description</li>
         </ul>
       </div>
     );
@@ -47,7 +53,7 @@ const TableHeaderSectionMenu = () => {
       >
         <ul>
           <li onClick={rename}>Rename</li>
-          <li>Add description</li>
+          <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
       </div>
@@ -65,7 +71,7 @@ const TableHeaderSectionMenu = () => {
             Filter...
           </li>
           <li onClick={rename}>Rename</li>
-          <li>Add description</li>
+          <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
       </div>
@@ -94,7 +100,7 @@ const TableHeaderSectionMenu = () => {
             Set parameters...
           </li>
           <li onClick={rename}>Rename</li>
-          <li>Add description</li>
+          <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
       </div>

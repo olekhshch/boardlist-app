@@ -1,11 +1,37 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteItemsById,
+  duplicateItemsById,
+} from "../features/items/itemsSlice";
+import { resetSelectedItems } from "../features/system/systemSlice";
 
 const ItemSelectedModal = () => {
   const { selectedItems } = useSelector((state) => state.system);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const dispatch = useDispatch();
 
-  const overallCount = Object.values(selectedItems).flat().length;
+  const allSelected = Object.values(selectedItems).flat();
+  const overallCount = allSelected.length;
+
+  const undoSelection = () => {
+    dispatch(resetSelectedItems());
+    const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+    allCheckboxes.forEach((input) => {
+      if (input.checked) {
+        input.checked = false;
+      }
+    });
+  };
+
+  const deleteSelected = () => {
+    dispatch(deleteItemsById({ selectedItemIds: allSelected }));
+    dispatch(resetSelectedItems());
+  };
+
+  const duplicateSelected = () => {
+    dispatch(duplicateItemsById({ selectedItemIds: allSelected }));
+  };
 
   return (
     <div className="selectedItems-modal flex">
@@ -18,11 +44,23 @@ const ItemSelectedModal = () => {
         className="flex"
         style={{ borderRight: "1px solid var(--grey-contour)" }}
       >
-        <button className="selected-items-modal-btn">Delete</button>
+        <button className="selected-items-modal-btn" onClick={deleteSelected}>
+          Delete
+        </button>
         <button className="selected-items-modal-btn">Archive</button>
-        <button className="selected-items-modal-btn">Duplicate</button>
+        <button
+          className="selected-items-modal-btn"
+          onClick={duplicateSelected}
+        >
+          Duplicate
+        </button>
       </div>
-      <button className="selected-items-modal-btn cross-btn">+</button>
+      <button
+        onClick={undoSelection}
+        className="selected-items-modal-btn cross-btn"
+      >
+        +
+      </button>
     </div>
   );
 };

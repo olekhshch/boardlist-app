@@ -721,7 +721,7 @@ main {
 .selectedItems-modal {
     position: fixed;
     z-index: 200;
-    left: 44%;
+    left: 40%;
     height: fit-content;
     bottom: 40px;
     background-color: white;
@@ -780,4 +780,21 @@ main {
     font-size: 48px;
     font-weight: lighter;
     transform: rotate(45deg);
+}
+
+.table-header-icon {
+    all: unset;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.main-btn-conteiner {
+    position: absolute;
+    display: flex;
+    top: 0;
+    right: 0;
+}
+
+.main-btn-conteiner button {
+    all: unset;
 }

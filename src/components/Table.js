@@ -7,8 +7,11 @@ import { setSectionWidth } from "../features/groups/groupsSlice";
 import {
   openTableSectionMenu,
   openSectionSettingsMenu,
+  openSectionDescriptionWindow,
 } from "../features/menu/menuSlice";
 import { BiDotsHorizontal } from "react-icons/bi";
+import Circle from "./icons/Circle";
+import { selectItemsByGroup } from "../features/system/systemSlice";
 
 const Table = ({
   parent,
@@ -63,17 +66,36 @@ const Table = ({
     window.addEventListener("mouseup", dividerMouseup);
   };
 
+  const selectAllItems = () => {
+    const itemIds = groupItems.map((item) => item.id);
+    dispatch(selectItemsByGroup({ groupId: id, allItemIds: itemIds }));
+    document
+      .querySelectorAll(`input[data-parent-id="${id}"]`)
+      .forEach((checkbox) => (checkbox.checked = true));
+  };
+
   return (
     <section
       className="table flex-col"
       style={{ borderColor: `var(--${theme}-main)` }}
     >
       <div className="table-header flex">
-        <div className="table-checkbox flex-col">
-          <input type="checkbox" />
+        <div className="table-checkbox flex-col" onClick={selectAllItems}>
+          <input type="checkbox" data-parent-id={id} data-main-checkbox />
         </div>
         {groupLayout.content.map((section) => {
           const { index, width, title, type } = section;
+
+          const showColumnDescription = (e) => {
+            const { left, top } = e.target.getBoundingClientRect();
+            dispatch(
+              openSectionDescriptionWindow({
+                coordinates: { left, top },
+                section,
+                groupId: id,
+              })
+            );
+          };
 
           const openMenu = (e) => {
             const { left, top } = e.target.getBoundingClientRect();
@@ -97,13 +119,26 @@ const Table = ({
             >
               <div
                 className="table-section flex"
-                style={{ width: `${width}px` }}
+                style={{ width: `${width}px`, justifyContent: "space-between" }}
               >
-                <div className="flex-grow-1">
-                  {title}
-                  {type === "number" &&
-                    section.unit !== "" &&
-                    ` [${section.unit}]`}
+                <div
+                  className="flex flex-grow-1"
+                  style={{ justifyContent: "center" }}
+                >
+                  <div>
+                    {title}
+                    {type === "number" &&
+                      section.unit !== "" &&
+                      ` [${section.unit}]`}
+                    {section.description && (
+                      <button
+                        className="table-header-icon"
+                        onClick={showColumnDescription}
+                      >
+                        <Circle r="4" colour={theme} />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div
                   className="divider"
@@ -141,6 +176,7 @@ const Table = ({
               groupLayout={groupLayout}
               statusList={statusList}
               setStatusList={setStatusList}
+              theme={theme}
             />
           );
         })}

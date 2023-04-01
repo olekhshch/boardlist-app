@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { changeValue } from "../features/items/itemsSlice";
+import { changeValue, deleteItemsByGroup } from "../features/items/itemsSlice";
 import {
   closeMenu,
   setMenuCoordinates,
   openGroupThemePicker,
   openStatusEditMenu,
+  openGroupMoveMenu,
 } from "../features/menu/menuSlice";
 import {
   toggleIsCollapsed,
   setTheme,
   addGroupLayoutSection,
   addNumberSection,
+  deleteGroup,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import { addStatus } from "../features/statuses/statusesSlice";
@@ -23,6 +25,8 @@ import TableHeaderSectionMenu from "./menus/TableHeaderSectionMenu";
 import SectionRenameMenu from "./menus/SectionRenameMenu";
 import CellTextarea from "./menus/CellTextarea";
 import NumberParametersWindow from "./menus/NumberParametersWindow";
+import SectionDescription from "./menus/SectionDescription";
+import MoveGroupMenu from "./menus/MoveGroupMenu";
 
 const Menu = () => {
   const {
@@ -59,25 +63,55 @@ const Menu = () => {
       dispatch(openGroupThemePicker());
     };
 
+    const removeGroup = () => {
+      dispatch(deleteItemsByGroup({ groupId }));
+      dispatch(deleteGroup({ groupId }));
+      dispatch(closeMenu());
+    };
+
+    const handleMoveClick = (e) => {
+      const { left, width, top } = e.target.getBoundingClientRect();
+      dispatch(
+        openGroupMoveMenu({
+          coordinates: { left: left + 0.5 * width, top: top - 100 },
+        })
+      );
+    };
+
     return (
-      <div
-        className="menu"
-        style={{ left: coordinates.left, top: coordinates.top }}
-      >
-        <ul>
-          <li className="list-animation" onClick={collapseGroup}>
-            Collapse
-          </li>
-          <li className="list-animation" onClick={openThemeMenu}>
-            Change colour
-          </li>
-          <li className="list-animation">Rename</li>
-          <li className="list-animation">Delete</li>
-        </ul>
-      </div>
+      <>
+        <div
+          className="menu"
+          style={{ left: coordinates.left, top: coordinates.top }}
+        >
+          <ul>
+            <li className="list-animation" onClick={collapseGroup}>
+              Collapse
+            </li>
+            <li className="list-animation" onClick={openThemeMenu}>
+              Change colour...
+            </li>
+            <li className="list-animation">Duplicate</li>
+            <li className="list-animation" onClick={handleMoveClick}>
+              Move to...
+            </li>
+            <li className="list-animation">Rename</li>
+            <li className="list-animation" onClick={removeGroup}>
+              Delete
+            </li>
+          </ul>
+        </div>
+      </>
     );
   }
 
+  if (menuType === "group-move") {
+    return <MoveGroupMenu />;
+  }
+
+  if (menuType === "section-description") {
+    return <SectionDescription />;
+  }
   if (menuType === "group-theme") {
     const setGroupTheme = (e) => {
       const themeValue = e.target.dataset.theme;

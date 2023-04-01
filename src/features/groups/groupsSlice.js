@@ -48,6 +48,19 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    deleteGroup: (state, { payload }) => {
+      const { groupId } = payload;
+      state.allGroups = state.allGroups.filter((group) => group.id !== groupId);
+    },
+    moveToAnotherBoard: (state, { payload }) => {
+      const { groupId, newBoardId } = payload;
+      state.allGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          return { ...group, boardId: newBoardId };
+        }
+        return group;
+      });
+    },
     addGroupLayoutSection: (state, { payload }) => {
       console.log(payload); //groupId, type, statusId
       const newGroups = state.allGroups.map((group) => {
@@ -61,6 +74,7 @@ const groupsSlice = createSlice({
               title: "Text field",
               type: payload.type,
               width: 160,
+              isCollapsed: false,
             };
           }
           if (payload.type === "status") {
@@ -70,6 +84,7 @@ const groupsSlice = createSlice({
               type: payload.type,
               statusId: payload.statusId,
               width: 120,
+              isCollapsed: false,
             };
           }
           const newContent = [...content, newSection];
@@ -96,6 +111,7 @@ const groupsSlice = createSlice({
             unit: "",
             title: "Number",
             width: 120,
+            isCollapsed: false,
           };
           const newContent = [...content, newSection];
           const newLayout = { lastIndex: newLastIndex, content: newContent };
@@ -121,6 +137,27 @@ const groupsSlice = createSlice({
         return group;
       });
       state.allGroups = newGroups;
+    },
+    setSectionDescription: (state, { payload }) => {
+      const { description, groupId, sectionId } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { content } = group.groupLayout;
+          const newContent = content.map((section) => {
+            if (section.index === sectionId) {
+              return { ...section, description: description };
+            }
+            return section;
+          });
+          return {
+            ...group,
+            groupLayout: { ...group.groupLayout, content: newContent },
+          };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+      console.log(state.allGroups);
     },
     setSectionWidth: (state, { payload }) => {
       const { sectionId, groupId, newWidth } = payload;
@@ -221,9 +258,12 @@ export const {
   setGroupsState,
   addGroup,
   renameGroup,
+  deleteGroup,
+  moveToAnotherBoard,
   addGroupLayoutSection,
   addNumberSection,
   setNumberParameters,
+  setSectionDescription,
   setSectionWidth,
   removeSection,
   renameSection,

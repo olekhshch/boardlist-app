@@ -4,11 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 add-section
 group-menu
 group-theme
+group-move
 status-list
 item-window
 
 section-settings [main, text, status, number, priority]
 section-rename
+section-description
 
 cell-textarea
 number-parameters
@@ -78,6 +80,12 @@ const menuSlice = createSlice({
     openGroupThemePicker: (state, { payload }) => {
       state.menuType = "group-theme";
     },
+    openGroupMoveMenu: (state, { payload }) => {
+      const { coordinates } = payload;
+      state.coordinates = coordinates;
+      state.menuType = "group-move";
+      state.isOpen = true;
+    },
     openTableSectionMenu: (state, { payload }) => {
       const { coordinates, group } = payload;
       state.menuType = "add-section";
@@ -125,6 +133,18 @@ const menuSlice = createSlice({
       state.menuType = "number-parameters";
       state.coordinates = coordinates;
     },
+    openSectionDescriptionWindow: (state, { payload }) => {
+      const { coordinates, section, groupId } = payload;
+      state.menuType = "section-description";
+      state.coordinates = coordinates;
+      if (groupId) {
+        state.groupId = groupId;
+      }
+      if (section) {
+        state.section = section;
+      }
+      state.isOpen = true;
+    },
     setMenuCoordinates: (state, { payload }) => {
       const { coordinates } = payload;
       state.coordinates = coordinates;
@@ -143,11 +163,13 @@ export const {
   openItemWindow,
   openGroupMenu,
   openGroupThemePicker,
+  openGroupMoveMenu,
   openTableSectionMenu,
   openSectionSettingsMenu,
   openSectionRename,
   expandCellTextarea,
   openNumberParameters,
+  openSectionDescriptionWindow,
   closeMenu,
   setMenuCoordinates,
 } = menuSlice.actions;

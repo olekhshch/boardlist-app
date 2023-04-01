@@ -34,6 +34,30 @@ const itemsSlice = createSlice({
       };
       state.allItems = [...state.allItems, newItem];
     },
+    deleteItemsById: (state, { payload }) => {
+      const { selectedItemIds } = payload;
+      state.allItems = state.allItems.filter(
+        (item) => !selectedItemIds.includes(item.id)
+      );
+    },
+    deleteItemsByGroup: (state, { payload }) => {
+      const { groupId } = payload;
+      state.allItems = state.allItems.filter(
+        (item) => item.groupId !== groupId
+      );
+    },
+    duplicateItemsById: (state, { payload }) => {
+      const { selectedItemIds } = payload;
+      const itemsToDuplicate = state.allItems.filter((item) =>
+        selectedItemIds.includes(item.id)
+      );
+      const newItems = itemsToDuplicate.map((item) => {
+        state.lastIndex += 1;
+        const newId = `i${state.lastIndex}`;
+        return { ...item, id: newId };
+      });
+      state.allItems = [...state.allItems, ...newItems];
+    },
     addSectionToItems: (state, { payload }) => {
       const { type, groupId, newIndex } = payload;
       const newSection = {
@@ -88,6 +112,9 @@ export default itemsSlice.reducer;
 
 export const {
   addItem,
+  deleteItemsById,
+  deleteItemsByGroup,
+  duplicateItemsById,
   addSectionToItems,
   changeValue,
   setItemsState,
