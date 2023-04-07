@@ -20,6 +20,9 @@ const Cell = ({
   increment,
   statusId,
   theme,
+  isArchieved,
+  item,
+  group,
 }) => {
   const dispatch = useDispatch();
   const { allStatuses } = useSelector((state) => state.statuses);
@@ -103,7 +106,9 @@ const Cell = ({
       <div style={{ position: "relative" }} className="cell-container">
         <form
           className="table-section flex-col"
-          style={{ width: `${width}px` }}
+          style={{
+            width: `${width}px`,
+          }}
           onSubmit={handleSubmit}
         >
           <input
@@ -111,6 +116,7 @@ const Cell = ({
             className="flex-grow-1"
             value={cellValue}
             onChange={handleChange}
+            style={{ color: isArchieved && `var(--${theme}-grey)` }}
           />
         </form>
         <div
@@ -135,6 +141,29 @@ const Cell = ({
   }
 
   if (type === "main") {
+    const { notes } = item;
+    const notesCounter = notes.length;
+
+    const NotesBtn = () => {
+      return (
+        <button
+          className={notesCounter > 0 ? "item-notes-btn" : "item-notes-hidden"}
+          onClick={() => dispatch(openItemWindow({ item, group }))}
+          style={{ margin: "3px 6px", position: "relative" }}
+        >
+          <Notes height="20" colour={theme} />
+          {notesCounter > 0 && (
+            <div
+              className="notes-counter"
+              style={{ backgroundColor: `var(--${theme}-main)` }}
+            >
+              {notesCounter}
+            </div>
+          )}
+        </button>
+      );
+    };
+
     return (
       <div style={{ position: "relative" }}>
         <form
@@ -144,14 +173,13 @@ const Cell = ({
         >
           <input
             className="flex-grow-1"
+            style={{ color: isArchieved && `var(--${theme}-grey)` }}
             value={cellValue}
             onChange={(e) => setCellValue(e.target.value)}
           />
         </form>
         <div className="main-btn-conteiner">
-          <button style={{ margin: "3px 6px" }}>
-            <Notes height="20" colour={theme} />
-          </button>
+          <NotesBtn />
         </div>
       </div>
     );
@@ -185,6 +213,7 @@ const Cell = ({
       >
         <input
           className="flex-grow-1"
+          style={{ color: isArchieved && `var(--${theme}-grey)` }}
           value={cellValue}
           onChange={handleChange}
         />

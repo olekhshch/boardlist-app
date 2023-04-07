@@ -117,6 +117,71 @@ const itemsSlice = createSlice({
       });
       state.allItems = newItems;
     },
+    addNote: (state, { payload }) => {
+      const { itemId, content, title } = payload;
+      const creationDate = Date.now();
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const newNote = {
+            title,
+            content,
+            creationDate,
+            isPinned: false,
+          };
+          return { ...item, notes: [...item.notes, newNote] };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
+    pinNote: (state, { payload }) => {
+      const { itemId, noteCreationDate } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const { notes } = item;
+          const newNotes = notes.map((note) => {
+            if (note.creationDate == noteCreationDate) {
+              return { ...note, isPinned: true };
+            }
+            return note;
+          });
+          return { ...item, notes: newNotes };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
+    unpinNote: (state, { payload }) => {
+      const { itemId, noteCreationDate } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const { notes } = item;
+          const newNotes = notes.map((note) => {
+            if (note.creationDate == noteCreationDate) {
+              return { ...note, isPinned: false };
+            }
+            return note;
+          });
+          return { ...item, notes: newNotes };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
+    deleteNote: (state, { payload }) => {
+      const { itemId, noteCreationDate } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const { notes } = item;
+          const newNotes = notes.filter(
+            (note) => note.creationDate !== noteCreationDate
+          );
+          return { ...item, notes: newNotes };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
   },
 });
 
@@ -132,4 +197,8 @@ export const {
   changeValue,
   setItemsState,
   removeItemSection,
+  addNote,
+  pinNote,
+  unpinNote,
+  deleteNote,
 } = itemsSlice.actions;

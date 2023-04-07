@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { renameGroup, toggleIsCollapsed } from "../features/groups/groupsSlice";
 import { FaChevronDown } from "react-icons/fa";
@@ -28,12 +28,16 @@ const Group = ({
   const [groupTitle, setGroupTitle] = useState(title);
   const [showArchieved, setShowArchieved] = useState(false);
 
+  const [titleEditMode, setTitleEditMode] = useState(false);
+  const [titleInputWidth, setTitleInputWidth] = useState(140);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(id);
     if (groupTitle.trim() !== "") {
       dispatch(renameGroup({ id, title: groupTitle.trim() }));
     }
+    setTitleEditMode(false);
   };
 
   const toggleGroupMenu = (e) => {
@@ -45,6 +49,12 @@ const Group = ({
         groupId: id,
       })
     );
+  };
+
+  const editMode = (e) => {
+    const { width } = e.target.getBoundingClientRect();
+    setTitleInputWidth(width);
+    setTitleEditMode(true);
   };
 
   if (isCollapsed) {
@@ -76,12 +86,36 @@ const Group = ({
           <FaChevronDown />
         </button>
         <form onSubmit={handleSubmit}>
-          <input
-            className="group-title"
-            style={{ color: `var(--${theme}-main)` }}
-            value={groupTitle}
-            onChange={(e) => setGroupTitle(e.target.value)}
-          />
+          {!titleEditMode ? (
+            <span
+              onMouseOver={editMode}
+              className="group-title"
+              style={{ color: `var(--${theme}-main)` }}
+            >
+              {groupTitle}
+            </span>
+          ) : (
+            <input
+              className="group-title"
+              data-group-id={id}
+              style={{
+                color: `var(--${theme}-main)`,
+                width: `${titleInputWidth}px`,
+              }}
+              value={groupTitle}
+              onChange={(e) => setGroupTitle(e.target.value)}
+            />
+          )}
+          {showArchieved && (
+            <span
+              title="Hide archieved"
+              className="group-active-effect"
+              style={{ backgroundColor: `var(--${theme}-bg)` }}
+              onClick={() => setShowArchieved(false)}
+            >
+              A
+            </span>
+          )}
         </form>
       </div>
       <Table

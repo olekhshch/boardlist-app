@@ -33,6 +33,7 @@ const boardsSlice = createSlice({
         title: payload,
         description: "",
         rawCreationDate,
+        isPinned: false,
       };
       state.allBoards = [...state.allBoards, newBoard];
     },
@@ -57,6 +58,16 @@ const boardsSlice = createSlice({
       });
       state.allBoards = newBoards;
     },
+    togglePinBoard: (state, { payload }) => {
+      const { boardId } = payload;
+      const newBoards = state.allBoards.map((board) => {
+        if (board.id === boardId) {
+          return { ...board, isPinned: !board.isPinned };
+        }
+        return board;
+      });
+      state.allBoards = newBoards;
+    },
   },
 });
 
@@ -68,4 +79,5 @@ export const {
   setActiveBoard,
   setBoardName,
   setBoardDescription,
+  togglePinBoard,
 } = boardsSlice.actions;

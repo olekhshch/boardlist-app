@@ -37,6 +37,12 @@ const ItemSelectedModal = () => {
   const archieveSelected = () => {
     dispatch(archieveItemsById({ itemIds: allSelected }));
     dispatch(resetSelectedItems());
+    const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+    allCheckboxes.forEach((input) => {
+      if (input.checked) {
+        input.checked = false;
+      }
+    });
   };
 
   return (

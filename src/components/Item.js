@@ -5,14 +5,21 @@ import { openItemWindow } from "../features/menu/menuSlice";
 import { addSelectedItem, unselectItem } from "../features/system/systemSlice";
 import Cell from "./Cell";
 
-const Item = ({ parent, groupLayout, statusList, setStatusList, theme }) => {
-  const { id, content, groupId } = parent;
+const Item = ({
+  parent,
+  group,
+  groupLayout,
+  statusList,
+  setStatusList,
+  theme,
+}) => {
+  const { id, content, groupId, isArchieved } = parent;
   const { selectedItems } = useSelector((state) => state.system);
   const dispatch = useDispatch();
   const checkboxEl = useRef(null);
 
   const openWindow = () => {
-    dispatch(openItemWindow({ item: parent }));
+    dispatch(openItemWindow({ item: parent, group }));
   };
 
   const handleCheck = () => {
@@ -53,6 +60,9 @@ const Item = ({ parent, groupLayout, statusList, setStatusList, theme }) => {
             statusList={statusList}
             setStatusList={setStatusList}
             theme={theme}
+            isArchieved={isArchieved}
+            item={parent}
+            group={group}
           />
         );
       })}

@@ -3,6 +3,7 @@ import {
   addBoard,
   setActiveBoard,
   setBoardName,
+  togglePinBoard,
 } from "../features/boards/boardsSlice";
 import { addGroup } from "../features/groups/groupsSlice";
 
@@ -11,6 +12,9 @@ import { BiDotsHorizontal } from "react-icons/bi";
 import { useEffect, useRef } from "react";
 import { AiOutlineRight } from "react-icons/ai";
 import { resetSelectedItems } from "../features/system/systemSlice";
+import { BsFillPinAngleFill } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -19,6 +23,9 @@ const Sidebar = () => {
   const { allBoards, activeBoardId, lastIndex } = useSelector(
     (state) => state.boards
   );
+
+  const pinnedBoards = allBoards.filter((board) => board.isPinned === true);
+  const otherBoards = allBoards.filter((board) => !board.isPinned);
 
   const sbRef = useRef(null);
 
@@ -70,6 +77,44 @@ const Sidebar = () => {
     }
   };
 
+  const BoardListComp = ({ board }) => {
+    const { id, isPinned, title } = board;
+    const dispatch = useDispatch();
+
+    const togglePin = (e) => {
+      dispatch(togglePinBoard({ boardId: id }));
+      e.stopPropagation();
+    };
+    return (
+      <div
+        key={id}
+        data-board-id={id}
+        className={`sb-list-item flex ${
+          activeBoardId === id && "sb-list-active"
+        }`}
+        onClick={() => changeActive(id)}
+      >
+        {isPinned && <BsFillPinAngleFill style={{ marginRight: "4px" }} />}
+        {title}
+        <div className="sb-list-btn-conteiner flex">
+          <button
+            className="icon-btn"
+            title={isPinned ? "Unpin" : "Pin"}
+            onClick={togglePin}
+          >
+            <BsFillPinAngleFill />
+          </button>
+          <button className="icon-btn" title="Edit">
+            <FiEdit />
+          </button>
+          <button className="icon-btn" title="Delete">
+            <FaTrashAlt />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="sb-spaceholder"></div>
@@ -85,21 +130,12 @@ const Sidebar = () => {
           </form>
         </div>
         <div className="boards-list flex-col flex-grow-1">
-          {allBoards.map(({ id, title }) => {
-            return (
-              <div
-                key={id}
-                data-board-id={id}
-                className={`sb-list-item flex ${
-                  activeBoardId === id && "sb-list-active"
-                }`}
-                onClick={() => changeActive(id)}
-              >
-                <div className="flex-grow-1">{title}</div>
-                <BiDotsHorizontal className="icon" />
-              </div>
-            );
-          })}
+          {pinnedBoards.map((board) => (
+            <BoardListComp board={board} />
+          ))}
+          {otherBoards.map((board) => (
+            <BoardListComp board={board} />
+          ))}
         </div>
         <button id="sidebar-settings-btn">Settings</button>
         <button

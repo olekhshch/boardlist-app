@@ -64,11 +64,16 @@ const menuSlice = createSlice({
       state.isOpen = true;
     },
     openItemWindow: (state, { payload }) => {
-      const { item } = payload;
+      const { item, group } = payload;
+      if (state.menuType !== "item-window") {
+        state.coordinates = { left: 260, top: 120 };
+      }
       state.menuType = "item-window";
       state.isOpen = true;
-      state.coordinates = { left: 900, top: 200 };
       state.item = item;
+      if (group) {
+        state.group = group;
+      }
     },
     openGroupMenu: (state, { payload }) => {
       const { coordinates, groupId } = payload;

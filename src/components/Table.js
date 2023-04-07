@@ -33,6 +33,8 @@ const Table = ({
     (item) => item.isArchieved === true
   );
 
+  const archievedCount = archievedItems.length;
+
   const [newItemInput, setNewItemInput] = useState("");
 
   const dispatch = useDispatch();
@@ -184,6 +186,7 @@ const Table = ({
             <Item
               key={item.id}
               parent={item}
+              group={parent}
               groupLayout={groupLayout}
               statusList={statusList}
               setStatusList={setStatusList}
@@ -197,6 +200,7 @@ const Table = ({
               <Item
                 key={item.id}
                 parent={item}
+                group={parent}
                 groupLayout={groupLayout}
                 statusList={statusList}
                 setStatusList={setStatusList}
@@ -210,7 +214,7 @@ const Table = ({
             style={{ backgroundColor: `var(--${theme}-grey)` }}
             onClick={() => setShowArchieved(true)}
           >
-            Show archieved
+            Show archieved ({archievedCount})
           </div>
         )}
       </div>

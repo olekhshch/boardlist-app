@@ -27,6 +27,7 @@ import CellTextarea from "./menus/CellTextarea";
 import NumberParametersWindow from "./menus/NumberParametersWindow";
 import SectionDescription from "./menus/SectionDescription";
 import MoveGroupMenu from "./menus/MoveGroupMenu";
+import ItemWindow from "./menus/ItemWindow";
 
 const Menu = () => {
   const {
@@ -269,86 +270,7 @@ const Menu = () => {
     );
   }
   if (menuType === "item-window") {
-    const mainValue = item.content.find(
-      (section) => section.layoutIndex === "t1"
-    ).value;
-
-    const { notes } = item;
-    const notesCount = notes.length;
-    const counterText = () => {
-      if (notesCount === 0) {
-        return "No notes";
-      }
-      if (notesCount === 1) {
-        return "1 note";
-      }
-
-      return `${notesCount} notes`;
-    };
-    const pinnedNotes = notes.filter((note) => note.isPinned);
-    const otherNotes = notes.filter((note) => !note.isPinned);
-
-    const dragWindow = (e) => {
-      const oldX = e.clientX;
-      const oldY = e.clientY;
-      console.log(oldX + "_:_" + oldY);
-      const mousemove = (ev) => {
-        const dX = ev.clientX - oldX;
-        const dY = ev.clientY - oldY;
-        dispatch(
-          setMenuCoordinates({
-            coordinates: {
-              left: coordinates.left + dX,
-              top: coordinates.top + dY,
-            },
-          })
-        );
-
-        window.addEventListener("mouseup", () => {
-          window.removeEventListener("mousemove", mousemove);
-        });
-      };
-      window.addEventListener("mousemove", mousemove);
-    };
-
-    return (
-      <div
-        className="item-window flex-col"
-        style={{ left: coordinates.left, top: coordinates.top }}
-      >
-        <section className="item-window-header" onMouseDown={dragWindow}>
-          <h4>{mainValue}</h4>
-          <p>{counterText()}</p>
-        </section>
-        <form className="flex-col new-note-form">
-          <input placeholder="Name" />
-          <textarea placeholder="New note" />
-          <div className="flex" style={{ justifyContent: "right" }}>
-            <input type="submit" value="Add" className="btn-main blue-main" />
-          </div>
-        </form>
-        <section className="item-notes flex-col">
-          {pinnedNotes.map((note) => {
-            const { header, content } = note;
-            return (
-              <article className="note">
-                <h4>Pinned: {header}</h4>
-                <p>{content}</p>
-              </article>
-            );
-          })}
-          {otherNotes.map((note) => {
-            const { header, content } = note;
-            return (
-              <article className="note">
-                <h4>{header}</h4>
-                <p>{content}</p>
-              </article>
-            );
-          })}
-        </section>
-      </div>
-    );
+    return <ItemWindow />;
   }
 
   if (menuType === "section-settings") {
