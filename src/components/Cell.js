@@ -5,11 +5,13 @@ import {
   openStatusListMenu,
   openItemWindow,
   expandCellTextarea,
+  openLinkEditMenu,
 } from "../features/menu/menuSlice";
 import { GoNote } from "react-icons/go";
 import { CgExpand } from "react-icons/cg";
 import { BsFillArrowUpCircleFill, BsArrowDownCircleFill } from "react-icons/bs";
 import Notes from "./icons/Notes";
+import { BiLinkAlt } from "react-icons/bi";
 
 const Cell = ({
   width,
@@ -185,6 +187,101 @@ const Cell = ({
     );
   }
 
+  if (type === "checkbox") {
+    const toggleCheck = () => {
+      const newValue = cellValue ? false : true;
+      dispatch(changeValue({ newValue, itemId, layoutIndex: sectionIndex }));
+    };
+    return (
+      <div
+        className="table-section flex"
+        style={{
+          minWidth: "40px",
+          width: `${width}px`,
+          position: "relative",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+        onClick={toggleCheck}
+      >
+        <div
+          className="chechbox-border flex"
+          style={{ borderColor: `var(--${theme}-grey)` }}
+        >
+          {cellValue && (
+            <div
+              className="checkbox-inner"
+              style={{ backgroundColor: `var(--${theme}-main)` }}
+            ></div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "link") {
+    const { link } = item.content.find(
+      (section) => section.layoutIndex === sectionIndex
+    );
+
+    const openEditLinkWindow = (e) => {
+      const { left, top } = e.target.getBoundingClientRect();
+      dispatch(
+        openLinkEditMenu({
+          link,
+          value: cellValue,
+          itemId,
+          sectionId: sectionIndex,
+          coordinates: { left, top },
+        })
+      );
+    };
+
+    if (!link) {
+      return (
+        <div
+          className="table-section"
+          style={{
+            width: `${width}px`,
+            textAlign: "center",
+          }}
+          onClick={openEditLinkWindow}
+        >
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              margin: "2px 0",
+              fontSize: "1.1em",
+              opacity: 0,
+            }}
+          >
+            <BiLinkAlt className="icon" />
+            <b>+</b>
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div
+        className="table-section"
+        style={{
+          width: `${width}px`,
+          position: "relative",
+          textAlign: "center",
+        }}
+      >
+        <a className="flex-grow-1" href={link} target="_blank">
+          {cellValue}
+        </a>
+        <div className="cell-btn-conteiner">
+          <button onClick={openEditLinkWindow}>
+            <BiLinkAlt className="icon" />
+          </button>
+        </div>
+      </div>
+    );
+  }
   //type === 'text'
 
   const expand = () => {

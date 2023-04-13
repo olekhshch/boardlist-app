@@ -132,7 +132,11 @@ const Table = ({
             >
               <div
                 className="table-section flex"
-                style={{ width: `${width}px`, justifyContent: "space-between" }}
+                style={{
+                  width: `${width}px`,
+                  justifyContent: "space-between",
+                  minWidth: type === "checkbox" && "40px",
+                }}
               >
                 <div
                   className="flex flex-grow-1"

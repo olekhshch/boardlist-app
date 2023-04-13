@@ -725,7 +725,8 @@ main {
     font-size: 1.2em;
 }
 
-.cell-container:hover .cell-btn-conteiner button {
+
+.cell-container:hover .cell-btn-conteiner button, .table-section:hover button {
     animation: semi-appearing 0.6s forwards;
 }
 
@@ -919,6 +920,7 @@ main {
     padding: 10px;
     border: 1px solid var(--grey-contour);
     border-radius: 10px;
+    white-space: pre-wrap;
 }
 
 .note-date {
@@ -962,4 +964,20 @@ main {
 
 .item:hover .item-notes-hidden svg {
     opacity: 1;
+}
+
+.chechbox-border {
+    margin: 2px 0;
+    width: 1.1em;
+    height: 1.1em;
+    border: 2px solid var(--blue-main);
+    border-radius: 4px;
+    justify-content: center;
+}
+
+.checkbox-inner {
+    margin: 2px;
+    width: 100%;
+    background-color: var(--blue-main);
+    border-radius: 3px;
 }

@@ -19,8 +19,6 @@ import { addSectionToItems } from "../features/items/itemsSlice";
 import { addStatus } from "../features/statuses/statusesSlice";
 import StatusEditMenu from "./menus/StatusEditMenu";
 
-import { TiDocumentText } from "react-icons/ti";
-import { TbNumbers, TbLayoutList, TbFlag3Filled } from "react-icons/tb";
 import TableHeaderSectionMenu from "./menus/TableHeaderSectionMenu";
 import SectionRenameMenu from "./menus/SectionRenameMenu";
 import CellTextarea from "./menus/CellTextarea";
@@ -28,6 +26,8 @@ import NumberParametersWindow from "./menus/NumberParametersWindow";
 import SectionDescription from "./menus/SectionDescription";
 import MoveGroupMenu from "./menus/MoveGroupMenu";
 import ItemWindow from "./menus/ItemWindow";
+import AddSectionMenu from "./menus/AddSectionMenu";
+import LinkEditModal from "./menus/LinkEditModal";
 
 const Menu = () => {
   const {
@@ -42,7 +42,6 @@ const Menu = () => {
     showArchieved,
   } = useSelector((state) => state.menu);
 
-  const statusesState = useSelector((state) => state.statuses);
   const dispatch = useDispatch();
 
   console.log(menuType);
@@ -182,93 +181,9 @@ const Menu = () => {
   }
 
   if (menuType === "add-section") {
-    const addLayoutSection = (type) => {
-      const { lastIndex } = group.groupLayout;
-      if (type === "text") {
-        dispatch(
-          addSectionToItems({
-            type,
-            groupId: group.id,
-            newIndex: `t${lastIndex + 1}`,
-          })
-        );
-        dispatch(addGroupLayoutSection({ type, groupId: group.id }));
-      }
-      if (type === "status") {
-        dispatch(addStatus(group.id));
-        dispatch(
-          addSectionToItems({
-            type,
-            groupId: group.id,
-            newIndex: `t${lastIndex + 1}`,
-          })
-        );
-        dispatch(
-          addGroupLayoutSection({
-            type,
-            groupId: group.id,
-            statusId: `s${statusesState.lastIndex + 1}`,
-            newIndex: `t${lastIndex + 1}`,
-          })
-        );
-      }
-      if (type === "number") {
-        dispatch(
-          addSectionToItems({
-            type,
-            groupId: group.id,
-            newIndex: `t${lastIndex + 1}`,
-          })
-        );
-        dispatch(
-          addNumberSection({ groupId: group.id, newIndex: `t${lastIndex + 1}` })
-        );
-      }
-      dispatch(closeMenu());
-    };
-
-    return (
-      <div
-        className="menu"
-        style={{
-          left: coordinates.left,
-          top: coordinates.top,
-          textTransform: "capitalize",
-        }}
-      >
-        <ul>
-          <li
-            onClick={() => addLayoutSection("text")}
-            style={{ alignItems: "center", display: "flex" }}
-          >
-            <TiDocumentText style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
-            text
-          </li>
-          <li
-            onClick={() => addLayoutSection("number")}
-            style={{ alignItems: "center", display: "flex" }}
-          >
-            <TbNumbers style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
-            number
-          </li>
-          <li
-            onClick={() => addLayoutSection("status")}
-            style={{ alignItems: "center", display: "flex" }}
-          >
-            <TbLayoutList style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
-            status
-          </li>
-          <li
-            onClick={() => addLayoutSection("priority")}
-            style={{ alignItems: "center", display: "flex" }}
-          >
-            <TbFlag3Filled style={{ marginRight: "4px", fontSize: "1.2em" }} />{" "}
-            priority
-          </li>
-        </ul>
-      </div>
-    );
+    return <AddSectionMenu />;
   }
+
   if (menuType === "item-window") {
     return <ItemWindow />;
   }
@@ -287,6 +202,10 @@ const Menu = () => {
 
   if (menuType === "number-parameters") {
     return <NumberParametersWindow />;
+  }
+
+  if (menuType === "link-edit") {
+    return <LinkEditModal />;
   }
 
   if (menuType === "status-list") {

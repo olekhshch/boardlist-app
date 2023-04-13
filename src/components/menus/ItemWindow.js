@@ -7,6 +7,7 @@ import {
 import {
   addNote,
   deleteNote,
+  editNote,
   pinNote,
   unpinNote,
 } from "../../features/items/itemsSlice";
@@ -97,17 +98,10 @@ const ItemWindow = () => {
 
   const { notes } = item;
   const notesCount = notes.length;
-  const counterText = () => {
-    if (notesCount === 0) {
-      return "No notes";
-    }
-    if (notesCount === 1) {
-      return "1 note";
-    }
 
-    return `${notesCount} notes`;
-  };
-  const pinnedNotes = notes.filter((note) => note.isPinned);
+  const pinnedNotes = notes
+    .filter((note) => note.isPinned)
+    .sort((a, b) => a.creationDate);
   const otherNotes = notes.filter((note) => !note.isPinned);
 
   const dragWindow = (e) => {
@@ -232,6 +226,15 @@ const Note = ({ note, itemId }) => {
   const noteDate = new Date(creationDate).toLocaleDateString("pl-PL");
   const dispatch = useDispatch();
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [noteTitle, setNoteTitle] = useState(title);
+  const [noteContent, setNoteContent] = useState(content);
+
+  useEffect(() => {
+    setNoteContent(content);
+    setNoteTitle(title);
+  }, [isEditMode]);
+
   const pin = () => {
     dispatch(pinNote({ itemId, noteCreationDate: creationDate }));
   };
@@ -241,6 +244,61 @@ const Note = ({ note, itemId }) => {
   const remove = () => {
     dispatch(deleteNote({ itemId, noteCreationDate: creationDate }));
   };
+
+  if (isEditMode) {
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (noteContent.trim() !== "") {
+        dispatch(
+          editNote({
+            itemId,
+            noteCreationDate: creationDate,
+            newTitle: noteTitle,
+            newContent: noteContent,
+          })
+        );
+        setIsEditMode(false);
+      }
+    };
+
+    return (
+      <div>
+        <form style={{ width: "95%" }} onSubmit={handleSubmit}>
+          <div className="item-window-add-note">
+            <input
+              name="note-title"
+              placeholder="Note's title (optional)"
+              value={noteTitle}
+              onChange={(e) => setNoteTitle(e.target.value)}
+            />
+            <textarea
+              placeholder="Can't be empty"
+              value={noteContent}
+              onChange={(e) => setNoteContent(e.target.value)}
+            />
+          </div>
+          <div
+            className="flex"
+            style={{ gap: "10px", justifyContent: "right" }}
+          >
+            <button
+              onClick={() => setIsEditMode(false)}
+              className="btn-secondary"
+            >
+              Cancel
+            </button>
+            <input
+              type="submit"
+              value="Confirm changes"
+              className="btn-main blue-main"
+              style={{ width: "140px", fontSize: "1em" }}
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <article className="item-note flex">
       <div className="flex-col flex-grow-1">
@@ -264,7 +322,11 @@ const Note = ({ note, itemId }) => {
         >
           <BsFillPinAngleFill />
         </button>
-        <button className="icon-btn" title="Edit">
+        <button
+          className="icon-btn"
+          title="Edit"
+          onClick={() => setIsEditMode(true)}
+        >
           <FiEdit />
         </button>
         <button className="icon-btn" title="Delete" onClick={remove}>

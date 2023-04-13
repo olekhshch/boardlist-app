@@ -140,6 +140,48 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    addLinkSection: (state, { payload }) => {
+      const { groupId } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { lastIndex, content } = group.groupLayout;
+          const newLastIndex = lastIndex + 1;
+          const newSection = {
+            index: `t${newLastIndex}`,
+            type: "link",
+            title: "Link",
+            width: 100,
+            isCollapsed: false,
+          };
+          const newContent = [...content, newSection];
+          const newLayout = { lastIndex: newLastIndex, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
+    addCheckboxSection: (state, { payload }) => {
+      const { groupId } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { lastIndex, content } = group.groupLayout;
+          const newLastIndex = lastIndex + 1;
+          const newSection = {
+            index: `t${newLastIndex}`,
+            type: "checkbox",
+            title: "Done?",
+            width: 70,
+            isCollapsed: false,
+          };
+          const newContent = [...content, newSection];
+          const newLayout = { lastIndex: newLastIndex, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
     setSectionDescription: (state, { payload }) => {
       const { description, groupId, sectionId } = payload;
       const newGroups = state.allGroups.map((group) => {
@@ -265,6 +307,8 @@ export const {
   addGroupLayoutSection,
   addNumberSection,
   setNumberParameters,
+  addLinkSection,
+  addCheckboxSection,
   setSectionDescription,
   setSectionWidth,
   removeSection,

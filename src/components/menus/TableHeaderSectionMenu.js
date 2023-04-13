@@ -78,6 +78,36 @@ const TableHeaderSectionMenu = () => {
     );
   }
 
+  if (subType === "link") {
+    return (
+      <div
+        className="menu"
+        style={{ left: coordinates.left, top: coordinates.top }}
+      >
+        <ul>
+          <li onClick={rename}>Rename</li>
+          <li onClick={openAddDescription}>Add description</li>
+          <li onClick={remove}>Remove</li>
+        </ul>
+      </div>
+    );
+  }
+
+  if (subType === "checkbox") {
+    return (
+      <div
+        className="menu"
+        style={{ left: coordinates.left, top: coordinates.top }}
+      >
+        <ul>
+          <li onClick={rename}>Rename</li>
+          <li onClick={openAddDescription}>Add description</li>
+          <li onClick={remove}>Remove</li>
+        </ul>
+      </div>
+    );
+  }
+
   if (subType === "number") {
     const openParameters = () => {
       const newCoordinates = {

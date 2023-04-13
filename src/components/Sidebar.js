@@ -104,9 +104,6 @@ const Sidebar = () => {
           >
             <BsFillPinAngleFill />
           </button>
-          <button className="icon-btn" title="Edit">
-            <FiEdit />
-          </button>
           <button className="icon-btn" title="Delete">
             <FaTrashAlt />
           </button>

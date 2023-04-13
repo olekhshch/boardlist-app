@@ -71,6 +71,7 @@ const itemsSlice = createSlice({
       state.allItems = [...state.allItems, ...newItems];
     },
     addSectionToItems: (state, { payload }) => {
+      //N|A for Link section
       const { type, groupId, newIndex } = payload;
       const newSection = {
         layoutIndex: newIndex,
@@ -107,6 +108,23 @@ const itemsSlice = createSlice({
           const newContent = item.content.map((section) => {
             if (section.layoutIndex === layoutIndex) {
               const newSection = { ...section, value: newValue };
+              return newSection;
+            }
+            return section;
+          });
+          return { ...item, content: newContent };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
+    setLinkValue: (state, { payload }) => {
+      const { newValue, newLink, itemId, layoutIndex } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const newContent = item.content.map((section) => {
+            if (section.layoutIndex === layoutIndex) {
+              const newSection = { ...section, value: newValue, link: newLink };
               return newSection;
             }
             return section;
@@ -168,6 +186,23 @@ const itemsSlice = createSlice({
       });
       state.allItems = newItems;
     },
+    editNote: (state, { payload }) => {
+      const { itemId, noteCreationDate, newContent, newTitle } = payload;
+      const newItems = state.allItems.map((item) => {
+        if (item.id === itemId) {
+          const { notes } = item;
+          const newNotes = notes.map((note) => {
+            if (note.creationDate == noteCreationDate) {
+              return { ...note, content: newContent, title: newTitle };
+            }
+            return note;
+          });
+          return { ...item, notes: newNotes };
+        }
+        return item;
+      });
+      state.allItems = newItems;
+    },
     deleteNote: (state, { payload }) => {
       const { itemId, noteCreationDate } = payload;
       const newItems = state.allItems.map((item) => {
@@ -195,10 +230,12 @@ export const {
   duplicateItemsById,
   addSectionToItems,
   changeValue,
+  setLinkValue,
   setItemsState,
   removeItemSection,
   addNote,
   pinNote,
   unpinNote,
+  editNote,
   deleteNote,
 } = itemsSlice.actions;

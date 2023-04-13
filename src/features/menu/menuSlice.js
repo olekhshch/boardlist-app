@@ -6,6 +6,7 @@ group-menu
 group-theme
 group-move
 status-list
+link-edit
 item-window
 
 section-settings [main, text, status, number, priority]
@@ -35,6 +36,8 @@ const initialState = {
   sectionIndex: null,
   section: null,
   initialInputValue: "",
+  link: null,
+  value: null,
 };
 
 const menuSlice = createSlice({
@@ -138,6 +141,16 @@ const menuSlice = createSlice({
       state.menuType = "number-parameters";
       state.coordinates = coordinates;
     },
+    openLinkEditMenu: (state, { payload }) => {
+      const { link, value, itemId, coordinates, sectionId } = payload;
+      state.link = link;
+      state.value = value;
+      state.itemId = itemId;
+      state.sectionId = sectionId;
+      state.coordinates = coordinates;
+      state.menuType = "link-edit";
+      state.isOpen = true;
+    },
     openSectionDescriptionWindow: (state, { payload }) => {
       const { coordinates, section, groupId } = payload;
       state.menuType = "section-description";
@@ -174,6 +187,7 @@ export const {
   openSectionRename,
   expandCellTextarea,
   openNumberParameters,
+  openLinkEditMenu,
   openSectionDescriptionWindow,
   closeMenu,
   setMenuCoordinates,
