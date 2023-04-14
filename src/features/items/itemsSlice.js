@@ -46,6 +46,15 @@ const itemsSlice = createSlice({
         return item;
       });
     },
+    unarchieveItemsById: (state, { payload }) => {
+      const { itemIds } = payload;
+      state.allItems = state.allItems.map((item) => {
+        if (itemIds.includes(item.id)) {
+          return { ...item, isArchieved: false };
+        }
+        return item;
+      });
+    },
     deleteItemsById: (state, { payload }) => {
       const { selectedItemIds } = payload;
       state.allItems = state.allItems.filter(
@@ -225,6 +234,7 @@ export default itemsSlice.reducer;
 export const {
   addItem,
   archieveItemsById,
+  unarchieveItemsById,
   deleteItemsById,
   deleteItemsByGroup,
   duplicateItemsById,

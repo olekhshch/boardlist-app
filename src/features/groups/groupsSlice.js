@@ -63,6 +63,19 @@ const groupsSlice = createSlice({
         return group;
       });
     },
+    duplicateGroup: (state, { payload }) => {
+      const { group } = payload;
+      console.log(payload);
+      state.lastIndex += 1;
+      const rawCreationDate = Date.now();
+      const newGroup = {
+        ...group,
+        id: `g${state.lastIndex}`,
+        rawCreationDate,
+        title: `${group.title} (Copy)`,
+      };
+      state.allGroups = [...state.allGroups, newGroup];
+    },
     addGroupLayoutSection: (state, { payload }) => {
       console.log(payload); //groupId, type, statusId
       const newGroups = state.allGroups.map((group) => {
@@ -303,6 +316,7 @@ export const {
   addGroup,
   renameGroup,
   deleteGroup,
+  duplicateGroup,
   moveToAnotherBoard,
   addGroupLayoutSection,
   addNumberSection,

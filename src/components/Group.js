@@ -47,6 +47,7 @@ const Group = ({
       openGroupMenu({
         coordinates: { left: left + 10, top: top + 10 },
         groupId: id,
+        group,
       })
     );
   };
@@ -57,6 +58,16 @@ const Group = ({
     setTitleEditMode(true);
   };
 
+  const itemCounter = () => {
+    if (itemsCount === 1) {
+      return "1 item";
+    }
+    if (itemsCount > 0) {
+      return `${itemsCount} items`;
+    }
+    return "Empty";
+  };
+
   if (isCollapsed) {
     return (
       <div
@@ -64,10 +75,17 @@ const Group = ({
         onClick={() => dispatch(toggleIsCollapsed(id))}
       >
         <div className="flex-col group-panel">
-          <h2 className="group-title" style={{ color: `var(--${theme}-main)` }}>
+          <h2
+            className="group-title"
+            style={{
+              color: `var(--${theme}-main)`,
+              border: "none",
+              maxWidth: "500px",
+            }}
+          >
             {title}
           </h2>
-          <p>{itemsCount}</p>
+          <p>{itemCounter()}</p>
         </div>
       </div>
     );
@@ -117,6 +135,12 @@ const Group = ({
             </span>
           )}
         </form>
+        <span
+          className="group-items-counter"
+          style={{ color: `var(--${theme}-grey)` }}
+        >
+          {itemCounter()}
+        </span>
       </div>
       <Table
         type="group"

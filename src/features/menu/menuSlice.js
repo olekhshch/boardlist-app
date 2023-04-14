@@ -79,9 +79,10 @@ const menuSlice = createSlice({
       }
     },
     openGroupMenu: (state, { payload }) => {
-      const { coordinates, groupId } = payload;
+      const { coordinates, groupId, group } = payload;
       state.menuType = "group-menu";
       state.groupId = groupId;
+      state.group = group;
       state.coordinates = coordinates;
       state.isOpen = true;
     },

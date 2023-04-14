@@ -4,6 +4,7 @@ import {
   archieveItemsById,
   deleteItemsById,
   duplicateItemsById,
+  unarchieveItemsById,
 } from "../features/items/itemsSlice";
 import { resetSelectedItems } from "../features/system/systemSlice";
 
@@ -45,6 +46,11 @@ const ItemSelectedModal = () => {
     });
   };
 
+  const unarchieveSelected = () => {
+    dispatch(unarchieveItemsById({ itemIds: allSelected }));
+    dispatch(resetSelectedItems());
+  };
+
   return (
     <div className="selectedItems-modal flex">
       <div className="selected-items-count">{overallCount}</div>
@@ -62,7 +68,12 @@ const ItemSelectedModal = () => {
         <button className="selected-items-modal-btn" onClick={archieveSelected}>
           Archive
         </button>
-        <button className="selected-items-modal-btn">Unarchive</button>
+        <button
+          className="selected-items-modal-btn"
+          onClick={unarchieveSelected}
+        >
+          Unarchive
+        </button>
         <button
           className="selected-items-modal-btn"
           onClick={duplicateSelected}

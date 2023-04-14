@@ -14,6 +14,7 @@ import {
   addGroupLayoutSection,
   addNumberSection,
   deleteGroup,
+  duplicateGroup,
 } from "../features/groups/groupsSlice";
 import { addSectionToItems } from "../features/items/itemsSlice";
 import { addStatus } from "../features/statuses/statusesSlice";
@@ -79,6 +80,10 @@ const Menu = () => {
       );
     };
 
+    const duplicate = () => {
+      dispatch(duplicateGroup({ group }));
+    };
+
     return (
       <>
         <div
@@ -92,7 +97,9 @@ const Menu = () => {
             <li className="list-animation" onClick={openThemeMenu}>
               Change colour...
             </li>
-            <li className="list-animation">Duplicate</li>
+            <li className="list-animation" onClick={duplicate}>
+              Duplicate layout
+            </li>
             <li className="list-animation" onClick={handleMoveClick}>
               Move to...
             </li>

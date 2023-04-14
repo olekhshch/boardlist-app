@@ -16,7 +16,7 @@
 
     --red-main: rgb(235, 20, 20);
     --red-bg: rgb(235, 207, 207);
-    --red-grey: rgb(165, 153, 153);
+    --red-grey: rgb(192, 176, 176);
 
     --pink-main: rgb(237, 60, 140);
     --pink-bg: rgb(229, 180, 202);
@@ -980,4 +980,16 @@ main {
     width: 100%;
     background-color: var(--blue-main);
     border-radius: 3px;
+}
+
+.group-items-counter {
+    margin: auto 20px;
+    font-size: var(--h3-size);
+    font-weight: bold;
+    color: var(--blue-grey);
+    opacity: 0;
+}
+
+.group:hover .group-items-counter{
+    opacity: 1;
 }
