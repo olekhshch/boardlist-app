@@ -1,20 +1,19 @@
 import { setInputValue, toggleIsOpen } from "../features/sidebar/sidebarSlice";
 import {
   addBoard,
+  deleteBoard,
   setActiveBoard,
-  setBoardName,
   togglePinBoard,
 } from "../features/boards/boardsSlice";
-import { addGroup } from "../features/groups/groupsSlice";
+import { addGroup, deleteGroup } from "../features/groups/groupsSlice";
 
 import { useSelector, useDispatch } from "react-redux";
-import { BiDotsHorizontal } from "react-icons/bi";
 import { useEffect, useRef } from "react";
 import { AiOutlineRight } from "react-icons/ai";
 import { resetSelectedItems } from "../features/system/systemSlice";
 import { BsFillPinAngleFill } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
 import { FaTrashAlt } from "react-icons/fa";
+import { deleteItemsByGroup } from "../features/items/itemsSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -23,6 +22,9 @@ const Sidebar = () => {
   const { allBoards, activeBoardId, lastIndex } = useSelector(
     (state) => state.boards
   );
+
+  const { allGroups } = useSelector((state) => state.groups);
+  const { items } = useSelector((state) => state.items);
 
   const pinnedBoards = allBoards.filter((board) => board.isPinned === true);
   const otherBoards = allBoards.filter((board) => !board.isPinned);
@@ -42,7 +44,7 @@ const Sidebar = () => {
         <div className="sb-spaceholder sb-collapsed"></div>
         <nav className="sb sb-collapsed">
           <button
-            className="sb-toggle-btn"
+            className="sb-toggle-btn sb-toggle-btn-collapsed"
             style={{ left: "28px" }}
             onClick={() => dispatch(toggleIsOpen())}
           >
@@ -79,7 +81,19 @@ const Sidebar = () => {
 
   const BoardListComp = ({ board }) => {
     const { id, isPinned, title } = board;
-    const dispatch = useDispatch();
+
+    const deleteB = (e) => {
+      const boardGroups = allGroups
+        .filter((group) => group.boardId === id)
+        .map((group) => group.id);
+
+      boardGroups.forEach((groupId) => {
+        dispatch(deleteItemsByGroup({ groupId }));
+        dispatch(deleteGroup({ groupId }));
+      });
+      dispatch(deleteBoard({ boardId: id }));
+      e.stopPropagation();
+    };
 
     const togglePin = (e) => {
       dispatch(togglePinBoard({ boardId: id }));
@@ -104,7 +118,7 @@ const Sidebar = () => {
           >
             <BsFillPinAngleFill />
           </button>
-          <button className="icon-btn" title="Delete">
+          <button className="icon-btn" title="Delete" onClick={deleteB}>
             <FaTrashAlt />
           </button>
         </div>
@@ -140,7 +154,7 @@ const Sidebar = () => {
           style={{ left: "207px" }}
           onClick={() => dispatch(toggleIsOpen())}
         >
-          <AiOutlineRight />
+          <AiOutlineRight className="icon" />
         </button>
       </nav>
     </>

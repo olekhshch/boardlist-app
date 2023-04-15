@@ -68,6 +68,10 @@ const boardsSlice = createSlice({
       });
       state.allBoards = newBoards;
     },
+    deleteBoard: (state, { payload }) => {
+      const { boardId } = payload;
+      state.allBoards = state.allBoards.filter((board) => board.id !== boardId);
+    },
   },
 });
 
@@ -80,4 +84,5 @@ export const {
   setBoardName,
   setBoardDescription,
   togglePinBoard,
+  deleteBoard,
 } = boardsSlice.actions;
