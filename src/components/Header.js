@@ -15,6 +15,7 @@ import {
 } from "../features/groups/groupsSlice";
 import { setItemsState } from "../features/items/itemsSlice";
 import { setStatusesState } from "../features/statuses/statusesSlice";
+
 const Header = () => {
   const boardsState = useSelector((state) => state.boards);
   const { activeBoardId, allBoards } = boardsState;

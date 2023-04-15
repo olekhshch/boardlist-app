@@ -1,10 +1,53 @@
-# Getting Started with Create React App and Redux
+# Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+Pet project inspired by the Monday application. Helps with creating of customizable lists of items.
 
-## Available Scripts
+## Demonstration
 
-In the project directory, you can run:
+Link to the project with prepared demonstration data:
+
+To load prepared data choose "Demo" in the right top corner.
+
+## Getting started
+
+Each item (list element) is stored in a customizable group while groups can be sorted in individual boards depending on the purpose set by a user.
+
+At the very beginning, the app creates initial board with one empty group.
+
+### Boards
+
+To create a new `board` you have to provide it's name in an input field in the sidebar and press Enter. A new board with initial empty group will be created.
+
+To change the group's title and description you should set the group as active (by clicking on it in the sidebar list) and change those values in the header section of the active board (changes should be confirmed by pressing the Enter).
+
+### Groups
+
+To create a new group in the active board choose "New group" button in the header section. A new empty group will be created.
+
+To change group's title click it, provide new (non-empty) value, and confirm your choice with Enter.
+
+You can access group's manipulation menu by pressing three dots `…` icon on the left to the group's title (visible after hovering a mouse over the group). There you can:
+
+- Collapse/expand a group
+- Change a colour theme
+- Move a group to a different board
+- Create a new (empty) group with group's layout (Duplicate layout)
+- Copy a group
+- Delete a group
+
+Each group is represented by a table with items. By default each group has one (main) column with the name of an item (can't be empty). Additional columns can be added to a group by clicking + icon in a last column of a table, and choosing a type of the new column from opened menu:
+
+> All of the non-main inputs values in a table (text, number) are setting by changing their input value in the table - no need in confirmation of changes with Enter. Each column has it's own configuration menu which can be accessed by pressing the three dots `...` in the header cell of this column. Also, width of each column (except the very last one) can be changed using slider of the right side of each table header cell.
+
+#### Text
+
+Creates a column which takes a text as an input value. Pressing the "expand" button on the right side of the cell opens a small text area which helps with editing.
+
+#### Number
+
+A bit similar to a text column, however excepts numbers only as an input. If the column represents values in the same unit (e.g. km, g, s) it can be added using "Set parameters" option in the column editing menu. Also, if you plan on changing the value of the cell by a specific amount, you can set it in the same window as an increment (default value: 1). By pressing arrow icons on the right of a cell, the value of a cell will increase/decrease by a set increment.
+
+### Items
 
 ### `npm start`
 
