@@ -47,6 +47,18 @@ Creates a column which takes a text as an input value. Pressing the "expand" but
 
 A bit similar to a text column, however excepts numbers only as an input. If the column represents values in the same unit (e.g. km, g, s) it can be added using "Set parameters" option in the column editing menu. Also, if you plan on changing the value of the cell by a specific amount, you can set it in the same window as an increment (default value: 1). By pressing arrow icons on the right of a cell, the value of a cell will increase/decrease by a set increment.
 
+#### Status
+
+Creates a column where each cell can have an assigned status. By default there are 3 statuses available for each item (Done, In progress, Cancelled) - this list can be edited by clicking on any status cell and choosing "Edit" in the opened menu.
+
+#### Link
+
+Creates a cell which can store a link to a different page with a name set by a user.
+
+#### Checkbox
+
+Creates a cell with a checkbox which can represent different purposes (e.g. the item's status is Completed, item is available etc).
+
 ### Items
 
 ### `npm start`

@@ -91,7 +91,15 @@ const Sidebar = () => {
         dispatch(deleteItemsByGroup({ groupId }));
         dispatch(deleteGroup({ groupId }));
       });
-      dispatch(deleteBoard({ boardId: id }));
+      if (id === activeBoardId && allBoards.length > 1) {
+        const newActiveBoard = allBoards.filter((board) => board.id !== id)[0];
+        dispatch(setActiveBoard(newActiveBoard.id));
+      }
+      if (allBoards.length !== 1) {
+        dispatch(deleteBoard({ boardId: id }));
+      } else {
+        console.log("Create a new group in order to delete this one");
+      }
       e.stopPropagation();
     };
 
@@ -142,10 +150,10 @@ const Sidebar = () => {
         </div>
         <div className="boards-list flex-col flex-grow-1">
           {pinnedBoards.map((board) => (
-            <BoardListComp board={board} />
+            <BoardListComp board={board} key={board.id} />
           ))}
           {otherBoards.map((board) => (
-            <BoardListComp board={board} />
+            <BoardListComp board={board} key={board.id} />
           ))}
         </div>
         <button id="sidebar-settings-btn">Settings</button>

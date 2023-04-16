@@ -15,6 +15,10 @@ import {
 } from "../features/groups/groupsSlice";
 import { setItemsState } from "../features/items/itemsSlice";
 import { setStatusesState } from "../features/statuses/statusesSlice";
+import demoItems from "../db/items";
+import demoGroups from "../db/groups";
+import demoStatuses from "../db/statuses";
+import demoBoards from "../db/boards";
 
 const Header = () => {
   const boardsState = useSelector((state) => state.boards);
@@ -111,6 +115,13 @@ const Header = () => {
     );
   };
 
+  const showDemo = () => {
+    dispatch(setGroupsState(demoGroups));
+    dispatch(setStatusesState(demoStatuses));
+    dispatch(setBoardsState(demoBoards));
+    dispatch(setItemsState(demoItems));
+  };
+
   return (
     <header className={`board-header ${!isOpen && "board-header-collapsed"}`}>
       <div className="flex-col">
@@ -158,6 +169,9 @@ const Header = () => {
             </button>
             <button className="btn-secondary" onClick={saveState}>
               Save state
+            </button>
+            <button className="btn-secondary" onClick={showDemo}>
+              Demo
             </button>
           </div>
         </section>
