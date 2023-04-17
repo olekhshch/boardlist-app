@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { renameGroup, toggleIsCollapsed } from "../features/groups/groupsSlice";
 import { FaChevronDown } from "react-icons/fa";
@@ -7,17 +7,7 @@ import { openGroupMenu } from "../features/menu/menuSlice";
 
 import Table from "./Table";
 
-const Group = ({
-  group,
-  setIsMenuOpen,
-  setMenuCoordinates,
-  setCurrentGroup,
-  currentGroup,
-  menuType,
-  setMenuType,
-  statusList,
-  setStatusList,
-}) => {
+const Group = ({ group }) => {
   const { title, id, isCollapsed, theme } = group;
   const dispatch = useDispatch();
 
@@ -145,14 +135,6 @@ const Group = ({
       <Table
         type="group"
         parent={group}
-        setIsMenuOpen={setIsMenuOpen}
-        setMenuCoordinates={setMenuCoordinates}
-        setCurrentGroup={setCurrentGroup}
-        currentGroup={currentGroup}
-        setMenuType={setMenuType}
-        menuType={menuType}
-        statusList={statusList}
-        setStatusList={setStatusList}
         showArchieved={showArchieved}
         setShowArchieved={setShowArchieved}
       ></Table>

@@ -1,6 +1,6 @@
 # Description
 
-Pet project inspired by the Monday application. Helps with creating of customizable lists of items.
+Pet project inspired by the Monday application. It is a customizable list-making app, designed to help users easily organize and manage tasks and projects.
 
 ## Demonstration
 
@@ -12,7 +12,7 @@ To load prepared data choose "Demo" in the right top corner.
 
 Each item (list element) is stored in a customizable group while groups can be sorted in individual boards depending on the purpose set by a user.
 
-At the very beginning, the app creates initial board with one empty group.
+At the very beginning, the initial board with one empty group are created as a default state.
 
 ### Boards
 
@@ -22,7 +22,7 @@ To change the group's title and description you should set the group as active (
 
 ### Groups
 
-To create a new group in the active board choose "New group" button in the header section. A new empty group will be created.
+To create a new `group` in the active board choose "New group" button in the header section. A new empty group will be created.
 
 To change group's title click it, provide new (non-empty) value, and confirm your choice with Enter.
 
@@ -61,7 +61,7 @@ Creates a cell with a checkbox which can represent different purposes (e.g. the 
 
 ### Items
 
-To create a new item you should provide a name (main value) for it in the input value of chosen group (can't be empty) and confirm it by pressing Enter. A new item will appear in the list of this group where it can be manipulated further.
+To create a new `item` you should provide a name (main value) for it in the input value of chosen group (the value can't be empty) and confirm it by pressing Enter. A new item will appear in the list of this group where it can be manipulated further.
 
 You can access items edit menu by selecting at least one item using checkbox in the beginning of every item. Next, all of the selected item can be duplicated, deleted or you can choose to archive/unarchive them.
 

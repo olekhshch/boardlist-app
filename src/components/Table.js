@@ -13,16 +13,7 @@ import { BiDotsHorizontal } from "react-icons/bi";
 import Circle from "./icons/Circle";
 import { selectItemsByGroup } from "../features/system/systemSlice";
 
-const Table = ({
-  parent,
-  setIsMenuOpen,
-  currentGroup,
-  menuType,
-  statusList,
-  setStatusList,
-  showArchieved,
-  setShowArchieved,
-}) => {
+const Table = ({ parent, showArchieved, setShowArchieved }) => {
   const { groupLayout, id, theme } = parent;
   const { allItems } = useSelector((state) => state.items);
   const allGroupItems = allItems.filter((item) => item.groupId === id);
@@ -41,7 +32,6 @@ const Table = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsMenuOpen(false);
     const layout = parent.groupLayout.content;
     console.log(layout);
     if (newItemInput.trim() !== "") {
@@ -173,11 +163,7 @@ const Table = ({
         })}
         <div className="table-section last">
           <button
-            className={`add-plus-btn flex-col ${
-              currentGroup === id &&
-              menuType === "add-section" &&
-              "add-plus-btn-active"
-            }`}
+            className="add-plus-btn flex-col"
             onClick={(e) => openAddSectionMenu(e)}
           >
             <AiOutlinePlus className="icon" />
@@ -192,8 +178,6 @@ const Table = ({
               parent={item}
               group={parent}
               groupLayout={groupLayout}
-              statusList={statusList}
-              setStatusList={setStatusList}
               theme={theme}
             />
           );
@@ -206,8 +190,6 @@ const Table = ({
                 parent={item}
                 group={parent}
                 groupLayout={groupLayout}
-                statusList={statusList}
-                setStatusList={setStatusList}
                 theme={theme}
               />
             );

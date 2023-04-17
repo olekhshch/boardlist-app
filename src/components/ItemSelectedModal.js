@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   archieveItemsById,
@@ -10,7 +10,6 @@ import { resetSelectedItems } from "../features/system/systemSlice";
 
 const ItemSelectedModal = () => {
   const { selectedItems } = useSelector((state) => state.system);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const dispatch = useDispatch();
 
   const allSelected = Object.values(selectedItems).flat();
@@ -35,7 +34,7 @@ const ItemSelectedModal = () => {
     dispatch(duplicateItemsById({ selectedItemIds: allSelected }));
   };
 
-  const archieveSelected = () => {
+  const archiveSelected = () => {
     dispatch(archieveItemsById({ itemIds: allSelected }));
     dispatch(resetSelectedItems());
     const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
@@ -46,7 +45,7 @@ const ItemSelectedModal = () => {
     });
   };
 
-  const unarchieveSelected = () => {
+  const unarchiveSelected = () => {
     dispatch(unarchieveItemsById({ itemIds: allSelected }));
     dispatch(resetSelectedItems());
   };
@@ -65,12 +64,12 @@ const ItemSelectedModal = () => {
         <button className="selected-items-modal-btn" onClick={deleteSelected}>
           Delete
         </button>
-        <button className="selected-items-modal-btn" onClick={archieveSelected}>
+        <button className="selected-items-modal-btn" onClick={archiveSelected}>
           Archive
         </button>
         <button
           className="selected-items-modal-btn"
-          onClick={unarchieveSelected}
+          onClick={unarchiveSelected}
         >
           Unarchive
         </button>
