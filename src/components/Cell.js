@@ -7,16 +7,17 @@ import {
   expandCellTextarea,
   openLinkEditMenu,
 } from "../features/menu/menuSlice";
-import { GoNote } from "react-icons/go";
 import { CgExpand } from "react-icons/cg";
 import { BsFillArrowUpCircleFill, BsArrowDownCircleFill } from "react-icons/bs";
 import Notes from "./icons/Notes";
 import { BiLinkAlt } from "react-icons/bi";
+import { expandSection } from "../features/groups/groupsSlice";
 
 const Cell = ({
   width,
   value,
   type,
+  isCollapsed,
   itemId,
   sectionIndex,
   increment,
@@ -25,6 +26,7 @@ const Cell = ({
   isArchieved,
   item,
   group,
+  sectionTitle,
 }) => {
   const dispatch = useDispatch();
   const { allStatuses } = useSelector((state) => state.statuses);
@@ -35,6 +37,20 @@ const Cell = ({
   useEffect(() => {
     setCellValue(value);
   }, [value]);
+
+  if (isCollapsed) {
+    const expand = () => {
+      dispatch(expandSection({ groupId: group.id, sectionId: sectionIndex }));
+    };
+    return (
+      <div
+        className="table-section-collapsed flex"
+        style={{ backgroundColor: `var(--${theme}-grey)` }}
+        title={`${sectionTitle} (expand)`}
+        onClick={expand}
+      ></div>
+    );
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();

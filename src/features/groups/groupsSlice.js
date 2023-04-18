@@ -268,6 +268,42 @@ const groupsSlice = createSlice({
       });
       state.allGroups = newGroups;
     },
+    collapseSection: (state, { payload }) => {
+      const { groupId, sectionId } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { content } = group.groupLayout;
+          const newContent = content.map((section) => {
+            if (section.index === sectionId) {
+              return { ...section, isCollapsed: true };
+            }
+            return section;
+          });
+          const newLayout = { ...group.groupLayout, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
+    expandSection: (state, { payload }) => {
+      const { groupId, sectionId } = payload;
+      const newGroups = state.allGroups.map((group) => {
+        if (group.id === groupId) {
+          const { content } = group.groupLayout;
+          const newContent = content.map((section) => {
+            if (section.index === sectionId) {
+              return { ...section, isCollapsed: false };
+            }
+            return section;
+          });
+          const newLayout = { ...group.groupLayout, content: newContent };
+          return { ...group, groupLayout: newLayout };
+        }
+        return group;
+      });
+      state.allGroups = newGroups;
+    },
     toggleIsCollapsed: (state, { payload }) => {
       const groupId = payload;
       const newGroups = state.allGroups.map((group) => {
@@ -327,6 +363,8 @@ export const {
   setSectionWidth,
   removeSection,
   renameSection,
+  collapseSection,
+  expandSection,
   toggleIsCollapsed,
   collapseAll,
   expandAll,

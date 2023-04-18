@@ -1016,3 +1016,14 @@ main {
     margin: 60px;
     gap: 20px;
 }
+
+.table-section-collapsed {
+    flex-shrink: 0;
+    width: 6px;
+    height: 1.5em;
+    font-size: var(--table-item-font-size);
+    border: 1px solid var(--grey-contour);
+    border-right: none;
+    border-bottom: none;
+    cursor: alias
+}

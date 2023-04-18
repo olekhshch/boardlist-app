@@ -44,7 +44,8 @@ const Item = ({
         />
       </div>
       {groupLayout.content.map((section) => {
-        const { index, type, width, statusId, increment } = section;
+        const { index, title, type, width, statusId, increment, isCollapsed } =
+          section;
         const value =
           content.find((section) => section.layoutIndex === index).value ?? "";
         return (
@@ -52,6 +53,7 @@ const Item = ({
             key={index}
             width={width}
             value={value}
+            isCollapsed={isCollapsed}
             type={type}
             itemId={id}
             sectionIndex={index}
@@ -63,6 +65,7 @@ const Item = ({
             isArchieved={isArchieved}
             item={parent}
             group={group}
+            sectionTitle={title}
           />
         );
       })}

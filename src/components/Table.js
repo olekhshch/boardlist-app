@@ -3,7 +3,7 @@ import Item from "./Item";
 import { addItem } from "../features/items/itemsSlice";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { setSectionWidth } from "../features/groups/groupsSlice";
+import { expandSection, setSectionWidth } from "../features/groups/groupsSlice";
 import {
   openTableSectionMenu,
   openSectionSettingsMenu,
@@ -87,7 +87,21 @@ const Table = ({ parent, showArchieved, setShowArchieved }) => {
           <input type="checkbox" data-parent-id={id} data-main-checkbox />
         </div>
         {groupLayout.content.map((section) => {
-          const { index, width, title, type } = section;
+          const { index, width, title, type, isCollapsed } = section;
+
+          if (isCollapsed) {
+            const expand = () => {
+              dispatch(expandSection({ groupId: id, sectionId: index }));
+            };
+            return (
+              <div
+                className="table-section-collapsed flex"
+                style={{ backgroundColor: `var(--${theme}-grey)` }}
+                onClick={expand}
+                title={`${title} (expand)`}
+              ></div>
+            );
+          }
 
           const showColumnDescription = (e) => {
             const { left, top } = e.target.getBoundingClientRect();

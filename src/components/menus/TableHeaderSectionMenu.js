@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSection } from "../../features/groups/groupsSlice";
+import {
+  collapseSection,
+  removeSection,
+} from "../../features/groups/groupsSlice";
 import { removeItemSection } from "../../features/items/itemsSlice";
 import {
   closeMenu,
@@ -24,6 +27,11 @@ const TableHeaderSectionMenu = () => {
 
   const rename = () => {
     dispatch(openSectionRename());
+  };
+
+  const collapse = () => {
+    dispatch(collapseSection({ groupId, sectionId }));
+    dispatch(closeMenu());
   };
 
   const openAddDescription = (e) => {
@@ -53,6 +61,7 @@ const TableHeaderSectionMenu = () => {
       >
         <ul>
           <li onClick={rename}>Rename</li>
+          <li onClick={collapse}>Collapse</li>
           <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -71,6 +80,7 @@ const TableHeaderSectionMenu = () => {
             Filter...
           </li>
           <li onClick={rename}>Rename</li>
+          <li onClick={collapse}>Collapse</li>
           <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -86,6 +96,7 @@ const TableHeaderSectionMenu = () => {
       >
         <ul>
           <li onClick={rename}>Rename</li>
+          <li onClick={collapse}>Collapse</li>
           <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -101,6 +112,7 @@ const TableHeaderSectionMenu = () => {
       >
         <ul>
           <li onClick={rename}>Rename</li>
+          <li onClick={collapse}>Collapse</li>
           <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
@@ -130,6 +142,7 @@ const TableHeaderSectionMenu = () => {
             Set parameters...
           </li>
           <li onClick={rename}>Rename</li>
+          <li onClick={collapse}>Collapse</li>
           <li onClick={openAddDescription}>Add description</li>
           <li onClick={remove}>Remove</li>
         </ul>
