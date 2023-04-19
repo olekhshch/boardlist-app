@@ -37,28 +37,16 @@ const ItemWindow = () => {
           if (type === "main") {
             return;
           }
-          const { value } = itemContent.find(
+          const { value, link } = itemContent.find(
             (section) => section.layoutIndex === index
           );
 
-          const Value = ({ itemValue, type }) => {
+          const Value = ({ itemValue, type, linkURL }) => {
             if (type === "text") {
-              return (
-                <div className="item-window-value">
-                  <input style={{ width: "100%" }} value={itemValue} />
-                </div>
-              );
+              return <div className="item-window-value">{itemValue}</div>;
             }
             if (type === "number") {
-              return (
-                <div className="item-window-value">
-                  <input
-                    type="number"
-                    style={{ width: "100%" }}
-                    value={itemValue}
-                  />
-                </div>
-              );
+              return <div className="item-window-value">{itemValue}</div>;
             }
             if (type === "status") {
               const status = allStatuses.find((st) => st.id === statusId);
@@ -67,13 +55,34 @@ const ItemWindow = () => {
                 <div
                   className="item-window-value"
                   style={{
-                    backgroundColor: `var(--${itemValue}-main)`,
+                    backgroundColor: `var(--${
+                      itemValue ? `${itemValue}-main` : "grey-contour"
+                    })`,
                     color: "white",
                     justifyContent: "center",
                   }}
                 >
                   {cellValue}
                 </div>
+              );
+            }
+
+            if (type === "checkbox") {
+              return (
+                <div className="item-window-value">
+                  {itemValue ? itemValue : "false"}
+                </div>
+              );
+            }
+
+            if (type === "link") {
+              if (!linkURL) {
+                return <div className="item-window-value">{itemValue}</div>;
+              }
+              return (
+                <a className="item-window-value" href={linkURL}>
+                  {itemValue}
+                </a>
               );
             }
             return <div className="item-window-value">{itemValue}</div>;
@@ -83,7 +92,7 @@ const ItemWindow = () => {
             <li key={index}>
               <form className="flex" onSubmit={(e) => e.preventDefault()}>
                 <label>{title}</label>
-                <Value type={type} itemValue={value} />
+                <Value type={type} itemValue={value} linkURL={link} />
               </form>
             </li>
           );

@@ -892,6 +892,7 @@ main {
     background-color: var(--blue-bg);
     padding: 6px;
     width: 160px;
+    min-height: 1.1em;
 }
 
 .item-window-add-note {
