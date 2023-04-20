@@ -51,6 +51,7 @@ const StatusEditMenu = () => {
   };
 
   const removeColour = (e) => {
+    e.preventDefault();
     const targetColour = e.target.dataset.colourValue;
     if (targetColour) {
       setChoosenStatuses(
@@ -69,14 +70,19 @@ const StatusEditMenu = () => {
         <div className="flex-col">
           {choosenStatuses.map(([colour, value]) => {
             return (
-              <form
-                onSubmit={(e) => e.preventDefault()}
+              <div
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
                 key={colour}
                 data-colour-value={colour}
                 className="table-section flex-col cell-status status-form"
                 style={{
                   width: `170px`,
-                  backgroundColor: `var(--${colour}-main)`,
+                  backgroundColor:
+                    colour === "default"
+                      ? "var(--grey-contour)"
+                      : `var(--${colour}-main)`,
                   justifyContent: "center",
                   cursor: "auto",
                   border: "none",
@@ -89,23 +95,27 @@ const StatusEditMenu = () => {
                   <input
                     value={value}
                     onChange={handleChange}
+                    onSubmit={(e) => e.preventDefault()}
                     data-colour-value={colour}
                     className="status-edit-input"
                   />
-                  <button
-                    onClick={removeColour}
-                    data-colour-value={colour}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      marginRight: "6px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <RxCross2 data-colour-value={colour} />
-                  </button>
+                  {colour !== "default" && (
+                    <button
+                      onSubmit={(e) => e.preventDefault()}
+                      onClick={removeColour}
+                      data-colour-value={colour}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        marginRight: "6px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <RxCross2 data-colour-value={colour} />
+                    </button>
+                  )}
                 </div>
-              </form>
+              </div>
             );
           })}
         </div>

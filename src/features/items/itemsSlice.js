@@ -84,7 +84,7 @@ const itemsSlice = createSlice({
       const { type, groupId, newIndex } = payload;
       const newSection = {
         layoutIndex: newIndex,
-        value: "",
+        value: type === "status" ? "default" : "",
         type,
       };
       const newItems = state.allItems.map((item) => {

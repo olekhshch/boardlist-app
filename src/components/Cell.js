@@ -72,7 +72,14 @@ const Cell = ({
     let colour = "grey-contour";
     let cellValue = "";
     const status = allStatuses.find((status) => status.id === statusId);
-    if (value !== "") {
+    try {
+      if (status.content.default) {
+        cellValue = status.content.default;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    if (value !== "default" && value) {
       try {
         colour = `${value}-main`;
         cellValue = status.content[value];

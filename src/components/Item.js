@@ -46,8 +46,12 @@ const Item = ({
       {groupLayout.content.map((section) => {
         const { index, title, type, width, statusId, increment, isCollapsed } =
           section;
-        const value =
-          content.find((section) => section.layoutIndex === index).value ?? "";
+        let value = content.find(
+          (section) => section.layoutIndex === index
+        ).value;
+        if (!value) {
+          value = "";
+        }
         return (
           <Cell
             key={index}

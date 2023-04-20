@@ -226,6 +226,8 @@ const Menu = () => {
       dispatch(openStatusEditMenu());
     };
 
+    console.log(statusContent);
+
     return (
       <div
         className="board-menu flex-col"
@@ -241,7 +243,10 @@ const Menu = () => {
                 className="table-section flex cell-status"
                 style={{
                   width: `150px`,
-                  backgroundColor: `var(--${colour}-main)`,
+                  backgroundColor:
+                    colour === "default"
+                      ? "var(--grey-contour)"
+                      : `var(--${colour}-main)`,
                 }}
               >
                 {value}

@@ -6,6 +6,7 @@ const defaultStatus = {
     green: "Done",
     red: "Cancelled",
     yellow: "In progress",
+    default: "",
   },
 };
 
